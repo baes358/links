@@ -1,18 +1,18 @@
 @font-face {
     font-family: 'Mplus';
-    src: url('/fonts/MPLUS1-VariableFont_wght.ttf') format('truetype');
+    src: url('fonts/MPLUS1-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Jacquard';
-    src: url('/fonts/Jacquard24-Regular.ttf') format('truetype');
+    src: url('fonts/Jacquard24-Regular.ttf') format('truetype');
     font-weight: 400; /* or normal */
     font-style: normal;
 }
 
 
 :root{
-    font-family:'Raleway';
+    font-family:'Mplus';
     letter-spacing:.03em;
     
 
