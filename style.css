@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'Mplus';
+    src: url('/fonts/MPLUS1-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Jacquard';
+    src: url('/fonts/Jacquard24-Regular.ttf') format('truetype');
+    font-weight: 400; /* or normal */
+    font-style: normal;
+}
+
+
+:root{
+    font-family:'Raleway';
+    letter-spacing:.03em;
+    
+
+    --white: #edecef;
+    --black: #000;
+
+}   
+
+/* background img container */
+.bg{
+    position:fixed;
+    width:100vw;
+    height: 100vh;
+    inset:0;
+    overflow:hidden;
+    z-index:-1;
+}
+
+/* background dark overlay */
+.bg::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: rgba(0, 0, 0, .5);
+    background-blend-mode: darken;
+    z-index:2;
+    pointer-events:none;
+}
+
+/* bg img itself */
+.bg img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position: center;
+    z-index:1;
+    
+}
+
+hgroup{
+    margin-inline:3rem;
+    margin-block-start:2.5rem;
+    position:relative;
+
+    z-index:5;
+}
+h1{
+    font-family: 'Jacquard';
+    position:relative;
+    text-transform:lowercase;
+    text-align:center;
+    font-size: 2.5rem;
+    letter-spacing:.02em;
+    color:var(--white);
+    margin-block-end:1.5rem;
+    
+
+}
+.content h2{
+    font-family:'Mplus';
+    font-size:1rem;
+    font-weight:200;
+    text-align:center;
+    color:var(--white);
+    margin-block: 1.5rem;
+
+}
+h3{
+    font-family:'Mplus';
+    text-align:center;
+    color:var(--white);
+    margin-block: 1rem;
+}
+hgroup p{
+    font-family:'Mplus';
+    text-align:center;
+    color:var(--white);
+    font-weight:400;
+    letter-spacing:.03em;
+    font-size:1rem;
+    line-height:1.25rem;
+    margin-inline:1.5rem;
+    text-wrap:pretty;
+
+
+}
+
+main .content{
+    display:block;
+    margin-inline:auto;
+    width:70%;
+    z-index:5;
+    margin-block:3rem;
+    padding:1rem;
+    background:rgba(0,0,0,0.5);
+    border:solid var(--black) 2px;
+    border-radius: 5px;
+}
+/* video content how-to? */
+/* main video{
+    display:block;
+    margin-inline:auto;
+    width:70%;
+    z-index:5;
+    margin-block:3rem;
+    padding:1rem;
+    background:rgba(0,0,0,0.25);
+    border:solid var(--black) 2px;
+    border-radius: 5px;
+} */
+main img{
+    display:block;
+    margin-inline:auto;
+    width:80%;
+    z-index:5;
+    margin-block-end:2rem;
+    
+}
+main .txt{
+    font-family:'Mplus';
+    text-align:center;
+    color:var(--white);
+    font-weight:400;
+    font-size:1rem;
+    line-height:1.25rem;
+    margin-block-end:2rem;
+
+}
+
