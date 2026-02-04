@@ -167,6 +167,10 @@ nav ul li{
     color:var(--white);
     font-weight:300;
 }
+nav ul li:hover{
+    color:var(--white);
+    text-decoration: underline;
+}
 
 main .content{
     display:block;
@@ -237,3 +241,19 @@ i.fa-link{
     color:var(--white);
 }
 
+
+footer p{
+    color:var(--white);
+    text-align:center;
+    margin-block:5rem 2rem;
+    font-weight:300;
+
+    font-size:.9rem;
+
+    @media (780px <= width <= 1280px){
+        font-size: 1.1rem;
+    }
+    @media (width > 1280px){
+        font-size: 1.4rem;
+    }
+}
