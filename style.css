@@ -58,7 +58,7 @@
 }
 
 hgroup{
-    margin-inline:3rem;
+    margin-inline:1.5rem;
     margin-block-start:2.5rem;
     position:relative;
 
@@ -69,14 +69,40 @@ h1{
     position:relative;
     /* text-transform:lowercase; */
     text-align:center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     letter-spacing:.02em;
+    line-height:2.5rem;
     color:var(--white);
     margin-block-end:1.5rem;
+
+
+    @media (780px <= width <= 1280px){
+        font-size: 3.5rem;
+    }
+    @media (width > 1280px){
+        font-size: 4rem;
+    }
+
     
 
 }
-.content h2{
+h2{
+    font-family:'Reddit';
+    text-align:center;
+    color:var(--white);
+    margin-block: 1rem;
+    font-weight:500;
+    font-size:1rem;
+
+    @media (780px <= width <= 1280px){
+        font-size: 1.25rem;
+    }
+    @media (width > 1280px){
+        font-size: 1.5rem;
+    }
+
+}
+.content h3{
     font-family:'Reddit';
     font-size:1rem;
     font-weight:200;
@@ -84,23 +110,44 @@ h1{
     color:var(--white);
     margin-block: 1.5rem;
 
+    @media (780px <= width <= 1280px){
+        font-size: 1.6rem;
+    }
+    @media (width > 1280px){
+        font-size: 1.7rem;
+    }
 }
-h3{
-    font-family:'Reddit';
-    text-align:center;
-    color:var(--white);
-    margin-block: 1rem;
+h3.link-title{
+    font-size:.7rem;
+
+    @media (360px <= width <= 780px){
+        font-size: 1rem;
+    }
+    @media (780px < width <= 1280px){
+        font-size: 1.6rem;
+    }
+    @media (width > 1280px){
+        font-size: 1.7rem;
+    }
 }
 hgroup p{
     font-family:'Reddit';
     text-align:center;
     color:var(--white);
-    font-weight:400;
+    font-weight:300;
     letter-spacing:.03em;
-    font-size:1rem;
     line-height:1.25rem;
     margin-inline:1.5rem;
     text-wrap:pretty;
+
+    font-size:.9rem;
+
+    @media (780px <= width <= 1280px){
+        font-size: 1.1rem;
+    }
+    @media (width > 1280px){
+        font-size: 1.4rem;
+    }
 
 
 }
