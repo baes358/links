@@ -2,7 +2,10 @@
     font-family: 'Mplus';
     src: url('fonts/MPLUS1-VariableFont_wght.ttf') format('truetype');
 }
-
+@font-face {
+    font-family: 'Reddit';
+    src: url('fonts/RedditMono-VariableFont_wght.ttf') format('truetype');
+}
 @font-face {
     font-family: 'Jacquard';
     src: url('fonts/Jacquard24-Regular.ttf') format('truetype');
@@ -12,7 +15,7 @@
 
 
 :root{
-    font-family:'Mplus';
+    font-family:'Reddit';
     letter-spacing:.03em;
     
 
@@ -74,7 +77,7 @@ h1{
 
 }
 .content h2{
-    font-family:'Mplus';
+    font-family:'Reddit';
     font-size:1rem;
     font-weight:200;
     text-align:center;
@@ -83,13 +86,13 @@ h1{
 
 }
 h3{
-    font-family:'Mplus';
+    font-family:'Reddit';
     text-align:center;
     color:var(--white);
     margin-block: 1rem;
 }
 hgroup p{
-    font-family:'Mplus';
+    font-family:'Reddit';
     text-align:center;
     color:var(--white);
     font-weight:400;
@@ -134,7 +137,7 @@ main img{
     
 }
 main .txt{
-    font-family:'Mplus';
+    font-family:'Reddit';
     text-align:center;
     color:var(--white);
     font-weight:400;
@@ -144,7 +147,7 @@ main .txt{
 
 }
 main .desc-txt{
-    font-family:'Mplus';
+    font-family:'Reddit';
     text-align:center;
     font-style: italic;
     color:var(--white);
@@ -153,5 +156,15 @@ main .desc-txt{
     line-height:1.25rem;
     margin-block-end:2rem;
 
+}
+
+.link-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block-end:1.5rem;
+}
+i.fa-link{
+    color:var(--white);
 }
 
