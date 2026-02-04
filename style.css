@@ -64,7 +64,7 @@ hgroup{
 h1{
     font-family: 'Jacquard';
     position:relative;
-    text-transform:lowercase;
+    /* text-transform:lowercase; */
     text-align:center;
     font-size: 2.5rem;
     letter-spacing:.02em;
@@ -138,6 +138,17 @@ main .txt{
     text-align:center;
     color:var(--white);
     font-weight:400;
+    font-size:1rem;
+    line-height:1.25rem;
+    margin-block-end:2rem;
+
+}
+main .desc-txt{
+    font-family:'Mplus';
+    text-align:center;
+    font-style: italic;
+    color:var(--white);
+    font-weight:200;
     font-size:1rem;
     line-height:1.25rem;
     margin-block-end:2rem;
