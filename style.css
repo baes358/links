@@ -58,8 +58,8 @@
 }
 
 hgroup{
-    margin-inline:1.5rem;
-    margin-block-start:2.5rem;
+    margin-inline:2rem;
+    margin-block:5rem;
     position:relative;
 
     z-index:5;
@@ -90,7 +90,7 @@ h2{
     font-family:'Reddit';
     text-align:center;
     color:var(--white);
-    margin-block: 1rem;
+    margin-block: 2.5rem .7rem;
     font-weight:500;
     font-size:1rem;
 
@@ -137,7 +137,7 @@ hgroup p{
     font-weight:300;
     letter-spacing:.03em;
     line-height:1.25rem;
-    margin-inline:1.5rem;
+    margin-inline:3rem;
     text-wrap:pretty;
 
     font-size:.9rem;
@@ -152,6 +152,22 @@ hgroup p{
 
 }
 
+nav{
+    position:sticky;
+    top:25;
+    z-index:6;
+}
+nav ul{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly
+}
+nav ul li{
+    font-family:"Reddit";
+    color:var(--white);
+    font-weight:300;
+}
+
 main .content{
     display:block;
     margin-inline:auto;
@@ -162,6 +178,10 @@ main .content{
     background:rgba(0,0,0,0.5);
     border:solid var(--black) 2px;
     border-radius: 5px;
+    opacity:.75;
+}
+main .content:hover{
+    opacity:1;
 }
 /* video content how-to? */
 /* main video{
@@ -181,8 +201,10 @@ main img{
     width:80%;
     z-index:5;
     margin-block-end:2rem;
+
     
 }
+
 main .txt{
     font-family:'Reddit';
     text-align:center;
