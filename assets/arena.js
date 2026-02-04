@@ -1,5 +1,5 @@
 let channelSlug = 'video-game-interfaces-x9glzuoklq' // The “slug” is just the end of the URL.
-let myUsername = 'sophia-bae' // For linking to your profile.
+let myUsername = 'sophia-bae-zsvqiaw7cdm' // For linking to your profile.
 
 
 
