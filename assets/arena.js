@@ -151,6 +151,21 @@ let renderBlock = (blockData) => {
 		// Uploaded PDFs!
 		else if (contentType.includes('pdf')) {
 			// …up to you!
+			let pdfItem =
+			`
+			<li class="content">
+				${ blockData.title ? `<h3>${ blockData.title} </h3>` : `<h3>PDF</h3>`} 
+			
+
+				<p class="txt">
+					<a target="_blank" href="${ blockData.attachment.url}">
+						<i class="fa-solid fa-link" aria-hidden="true"></i>
+					</a>
+				</p>
+			</li>
+			`
+
+			channelBlocks.insertAdjacentHTML('beforeend', pdfItem)
 		}
 
 		// Uploaded audio!
@@ -158,8 +173,9 @@ let renderBlock = (blockData) => {
 			// …still up to you, but here’s an `audio` element:
 			let audioItem =
 				`
-				<li>
-					<p><em>Audio</em></p>
+				<li class="content">
+					${ blockData.title ? `<h3>${ blockData.title} </h3>` : `<h3>Audio</h3>`}
+					
 					<audio controls src="${ blockData.attachment.url }"></video>
 				</li>
 				`
