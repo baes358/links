@@ -1,5 +1,9 @@
+console.log('arena.js loaded ✅')
+
+
 let channelSlug = 'video-game-interfaces-x9glzuoklq' // The “slug” is just the end of the URL.
 let myUsername = 'sophia-bae-zsvqiaw7cdm' // For linking to your profile.
+
 
 
 
@@ -57,11 +61,70 @@ let renderBlock = (blockData) => {
 	// Images!
 	else if (blockData.type == 'Image') {
 		// …up to you!
+		// create image variable
+		let imageItem = 
+			// template literal -> multi-line string
+			// ${...} -> evaluate JS and insert result here
+			// blockData.title ? ... : ... -> ternary operator
+				// if blockData.title exists, insert html
+				// if not, insert empty string ''
+
+			// blockData.source && blockData.source.url -> if blockData exists and has URL, expression is true
+			// ? -> then
+			// : '' -> else, if no source URL, insert ''
+			// src="${ blockData.image.large.src_2x }"
+				// large retina image URL
+			// alt="${ blockData.image.alt_text || '' }">
+				// || '' -> if alt_text is missing, use an empty string
+
+
+			`
+			<li class="content">
+				${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
+
+				<span class="link-icon">
+					${ blockData.source && blockData.source.url
+						?
+						`
+						<a target="_blank" href="${ blockData.source.url }">
+                        	<i class="fa-solid fa-link" aria-hidden="true"></i>
+							
+						</a>
+						`
+						: ''
+					}
+
+				</span>
+
+				<img 
+					src="${ blockData.image.large.src_2x }"
+					alt="${ blockData.image.alt_text || '' }">
+			</li>
+			`
+
+		channelBlocks.insertAdjacentHTML('beforeend', imageItem)
+
+
 	}
 
 	// Text!
 	else if (blockData.type == 'Text') {
 		// …up to you!
+		// ${...} -> evaluate JS and insert result here
+			// blockData.title ? ... : ... -> ternary operator
+				// if blockData.title exists, insert html
+				// if not, insert empty string ''
+		let textItem =
+			`
+			<li class="content">
+				${ blockData.title ? `<h3>${ blockData.title}</h3>}` : ''}
+
+				${ blockData.content_html ? `<p class="txt"> ${ blockData.content_html }</p>` : ''}
+			</li>
+
+			`
+
+			channelBlocks.insertAdjacentHTML('beforeend',)
 	}
 
 	// Uploaded (not linked) media…
