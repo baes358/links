@@ -34,7 +34,7 @@ let renderBlock = (blockData) => {
 		// Declares a “template literal” of the dynamic HTML we want.
 		let linkItem =
 			`
-			<li>
+			<li class="content">
 				<p><em>Link</em></p>
 				<figure>
 					<picture>
@@ -124,7 +124,7 @@ let renderBlock = (blockData) => {
 
 			`
 
-			channelBlocks.insertAdjacentHTML('beforeend',)
+			channelBlocks.insertAdjacentHTML('beforeend', textItem)
 	}
 
 	// Uploaded (not linked) media…
@@ -136,7 +136,7 @@ let renderBlock = (blockData) => {
 			// …still up to you, but we’ll give you the `video` element:
 			let videoItem =
 				`
-				<li>
+				<li class="content">
 					<p><em>Video</em></p>
 					<video controls src="${ blockData.attachment.url }"></video>
 				</li>
