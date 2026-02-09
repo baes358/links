@@ -117,7 +117,7 @@ let renderBlock = (blockData) => {
 		let textItem =
 			`
 			<li class="content">
-				${ blockData.title ? `<h3>${ blockData.title}</h3>}` : ''}
+				${ blockData.title ? `<h3>${ blockData.title}</h3>` : ''}
 
 				${ blockData.content_html ? `<p class="txt"> ${ blockData.content_html }</p>` : ''}
 			</li>
@@ -176,7 +176,7 @@ let renderBlock = (blockData) => {
 				<li class="content">
 					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
 					
-					<audio controls src="${ blockData.attachment.url }"></video>
+					<audio controls src="${ blockData.attachment.url }"></audio>
 				</li>
 				`
 
@@ -214,7 +214,7 @@ let renderBlock = (blockData) => {
 			let linkedAudioItem =
 			`
 			<li class="content">
-				${ blockData.title ? `h3${ blockData.title}</h3>` : `<h3>Audio</h3>`}
+				${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
 				${blockData.embed.html}
 			</li>
 			`
