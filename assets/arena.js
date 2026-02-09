@@ -35,19 +35,31 @@ let renderBlock = (blockData) => {
 		let linkItem =
 			`
 			<li class="content">
-				<p><em>Link</em></p>
+				${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
+
 				<figure>
 					<picture>
 						<source media="(width < 500px)" srcset="${ blockData.image.small.src_2x }">
 						<source media="(width < 1000px)" srcset="${ blockData.image.medium.src_2x }">
 						<img alt="${blockData.image.alt_text}" src="${ blockData.image.large.src_2x }">
 					</picture>
+					<span class="link-icon">
+						${ blockData.source && blockData.source.url
+							?
+							`
+							<a target="_blank" href="${ blockData.source.url }">
+								<i class="fa-solid fa-link" aria-hidden="true"></i>
+								
+							</a>
+							`
+							: ''
+						}
+
+					</span>
 					<figcaption>
-						<h3>${ blockData.title }</h3>
 						${ blockData.description.html }
 					</figcaption>
 				</figure>
-				<p><a href="${ blockData.source.url }">See the original ↗</a></p>
 			</li>
 			`
 
@@ -82,6 +94,9 @@ let renderBlock = (blockData) => {
 			<li class="content">
 				${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
 
+				<img 
+					src="${ blockData.image.large.src_2x }"
+					alt="${ blockData.image.alt_text || '' }">
 				<span class="link-icon">
 					${ blockData.source && blockData.source.url
 						?
@@ -95,10 +110,11 @@ let renderBlock = (blockData) => {
 					}
 
 				</span>
+				
+				
+			
 
-				<img 
-					src="${ blockData.image.large.src_2x }"
-					alt="${ blockData.image.alt_text || '' }">
+				
 			</li>
 			`
 
@@ -199,6 +215,8 @@ let renderBlock = (blockData) => {
 				<li class="content">
 					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Video</h3>`}
 					${ blockData.embed.html }
+					${ blockData.description.html }
+
 				</li>
 				`
 
@@ -216,6 +234,8 @@ let renderBlock = (blockData) => {
 			<li class="content">
 				${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
 				${blockData.embed.html}
+				${ blockData.description.html }
+
 			</li>
 			`
 
