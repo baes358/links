@@ -174,7 +174,7 @@ let renderBlock = (blockData) => {
 			let audioItem =
 				`
 				<li class="content">
-					${ blockData.title ? `<h3>${ blockData.title} </h3>` : `<h3>Audio</h3>`}
+					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
 					
 					<audio controls src="${ blockData.attachment.url }"></video>
 				</li>
@@ -196,8 +196,8 @@ let renderBlock = (blockData) => {
 			// …still up to you, but here’s an example `iframe` element:
 			let linkedVideoItem =
 				`
-				<li>
-					<p><em>Linked Video</em></p>
+				<li class="content">
+					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Video</h3>`}
 					${ blockData.embed.html }
 				</li>
 				`
@@ -211,6 +211,15 @@ let renderBlock = (blockData) => {
 		// Linked audio!
 		else if (embedType.includes('rich')) {
 			// …up to you!
+			let linkedAudioItem =
+			`
+			<li class="content">
+				${ blockData.title ? `h3${ blockData.title}</h3>` : `<h3>Audio</h3>`}
+				${blockData.embed.html}
+			</li>
+			`
+
+			channelBlocks.insertAdjacentHTML('beforeend', linkedAudioItem)
 		}
 	}
 }
