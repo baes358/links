@@ -219,7 +219,8 @@ iframe{
     display:block;
     margin-inline:auto;
     align-self:center;
-    width:100%;
+    width:80%;
+    margin-block:1rem;
 }
 
 main .txt{
