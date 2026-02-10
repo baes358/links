@@ -247,20 +247,26 @@ let renderBlock = (blockData) => {
 
 
 // A function to display the owner/collaborator info:
+
+// inside address tag -> <img src="${ userData.avatar }">
 let renderUser = (userData) => {
 	let channelUsers = document.querySelector('#channel-users') // Container.
+	// to guard renderUser function from crashing
+	if (!channelUsers) return
+
 
 	let userAddress =
 		`
 		<address>
-			<img src="${ userData.avatar }">
 			<h3>${ userData.name }</h3>
 			<p><a href="https://are.na/${ userData.slug }">Are.na profile ↗</a></p>
 		</address>
 		`
+		
 
 	channelUsers.insertAdjacentHTML('beforeend', userAddress)
 }
+
 
 
 

@@ -222,6 +222,13 @@ iframe{
     width:80%;
     margin-block:1rem;
 }
+audio{
+    display:block;
+    margin-inline:auto;
+    align-self:center;
+    width:80%;
+    margin-block:1rem;
+}
 
 main .txt{
     font-family:'Reddit';
