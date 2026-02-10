@@ -17,11 +17,29 @@ let placeChannelInfo = (channelData) => {
 
 	// Then set their content/attributes to our data:
 	channelTitle.innerHTML = channelData.title
-	channelDescription.innerHTML = channelData.description.html
+	channelDescription.innerHTML = channelData.description ? channelData.description.html : ''
 	channelCount.innerHTML = channelData.counts.blocks
 	channelLink.href = `https://www.are.na/channel/${channelSlug}`
 }
 
+// declare function txtString
+// take argument "value"
+let txtString = (value) => {
+	// if value has nothing, return empty string
+	if (!value) return ''
+
+	// if already a string, return string
+ 	if (typeof value === 'string') return value
+
+	 // common Are.na shape: { html: "..." }
+	if (typeof value === 'object' && value.html) return value.html
+
+	// other possible shapes: { content: "..."} etc.
+	if (typeof value === 'object' && value.content) return value.content
+
+	// if no fits to previous types, return empty
+	return ''
+}
 
 
 // Then our big function for specific-block-type rendering:
@@ -57,7 +75,7 @@ let renderBlock = (blockData) => {
 
 					</span>
 					<figcaption>
-						${ blockData.description.html }
+						${ blockData.description ? blockData.description.html : ''}
 					</figcaption>
 				</figure>
 			</li>
@@ -130,12 +148,31 @@ let renderBlock = (blockData) => {
 			// blockData.title ? ... : ... -> ternary operator
 				// if blockData.title exists, insert html
 				// if not, insert empty string ''
+
+		
+		let body = 
+			// or operator || -> return first true value
+			txtString(blockData.content_html) || txtString(blockData.content) || txtString(blockData.description)
+
+			// if (blockData.content_html){
+			// 	body = blockData.content_html
+			// } else if (blockData.content){
+			// 	body = blockData.content
+			// } else if (blockData.description && blockData.description.html){
+			// 	body = blockData.description.html
+			// }
+		
+
+		// blockData.content_html ? blockData.content_html : (blockData.content ? blockData.content : '')
+
 		let textItem =
+
+			// if true, return title in h3 tags. if false, return empty
 			`
 			<li class="content">
 				${ blockData.title ? `<h3>${ blockData.title}</h3>` : ''}
 
-				${ blockData.content_html ? `<p class="txt"> ${ blockData.content_html }</p>` : ''}
+				${ body ? `<p class="txt">${ body }</p>` : ''}
 			</li>
 
 			`
@@ -215,7 +252,7 @@ let renderBlock = (blockData) => {
 				<li class="content">
 					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Video</h3>`}
 					${ blockData.embed.html }
-					${ blockData.description.html }
+					${ blockData.description ? blockData.description.html : '' }
 
 				</li>
 				`
@@ -234,7 +271,7 @@ let renderBlock = (blockData) => {
 			<li class="content">
 				${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
 				${blockData.embed.html}
-				${ blockData.description.html }
+				${ blockData.description ? blockData.description.html : '' }
 
 			</li>
 			`
