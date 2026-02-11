@@ -160,7 +160,7 @@ let renderBlock = (blockData) => {
 
 		// Content prioritization logic.
 
-  		// The fallback chain below (using logical OR operators, ||) was refined with AI (ChatGPT) to safely prioritize available API fields (content_html, content, description) without throwing errors.
+  		// The fallback chain below for the body variable (using logical OR operators, ||) was refined with AI (ChatGPT) to safely prioritize available API fields (content_html, content, description) without throwing errors.
 		
 		
 		let body = 
