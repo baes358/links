@@ -24,7 +24,14 @@ let placeChannelInfo = (channelData) => {
 
 // declare function txtString
 // take argument "value"
+// This pattern was developed with assistance from an AI tool (ChatGPT) to safely normalize Are.na API text fields into renderable strings.
+// It prevents "[object Object]" errors when API values are returned as nested objects (e.g., { html: "..." }).
+// The process checks the values through if statements, and if they do not match any, it returns an empty string as the value.
+
 let txtString = (value) => {
+
+	// Defensive guard clause (pattern discussed with AI assistance, ChatGPT)
+	// prevents runtime errors if expected DOM containers are missing.
 	// if value has nothing, return empty string
 	if (!value) return ''
 
@@ -50,6 +57,7 @@ let renderBlock = (blockData) => {
 	// Links!
 	if (blockData.type == 'Link') {
 		// Declares a “template literal” of the dynamic HTML we want.
+
 		let linkItem =
 			`
 			<li class="content">
@@ -93,7 +101,8 @@ let renderBlock = (blockData) => {
 		// …up to you!
 		// create image variable
 		let imageItem = 
-			// template literal -> multi-line string
+
+			// template literal -> multi-line string (Used AI tool, ChatGPT, to further break down and understand semantics of the condition)
 			// ${...} -> evaluate JS and insert result here
 			// blockData.title ? ... : ... -> ternary operator
 				// if blockData.title exists, insert html
@@ -149,9 +158,14 @@ let renderBlock = (blockData) => {
 				// if blockData.title exists, insert html
 				// if not, insert empty string ''
 
+		// Content prioritization logic.
+
+  		// The fallback chain below (using logical OR operators, ||) was refined with AI (ChatGPT) to safely prioritize available API fields (content_html, content, description) without throwing errors.
+		
 		
 		let body = 
 			// or operator || -> return first true value
+			// implements the txtString function defined outside of the renderBlock function, and it applies the conditions to different properties of blockData in the order stated below
 			txtString(blockData.content_html) || txtString(blockData.content) || txtString(blockData.description)
 
 			// if (blockData.content_html){
@@ -288,6 +302,9 @@ let renderBlock = (blockData) => {
 // inside address tag -> <img src="${ userData.avatar }">
 let renderUser = (userData) => {
 	let channelUsers = document.querySelector('#channel-users') // Container.
+
+	// Defensive guard clause (pattern discussed with AI assistance, ChatGPT)
+	// prevents runtime errors if expected DOM containers are missing.
 	// to guard renderUser function from crashing
 	if (!channelUsers) return
 
