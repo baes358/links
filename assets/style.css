@@ -104,7 +104,7 @@ h2{
 .content h3{
     font-family:'Reddit';
     font-size:1rem;
-    font-weight:200;
+    font-weight:400;
     text-align:center;
     color:var(--white);
     margin-block: 1.5rem;
@@ -143,9 +143,11 @@ hgroup p{
 
     @media (780px <= width <= 1280px){
         font-size: 1.1rem;
+        line-height:1.35rem;
     }
     @media (width > 1280px){
         font-size: 1.4rem;
+        line-height:1.55rem;
     }
 
 
@@ -154,10 +156,19 @@ hgroup p{
     font-family:'Reddit';
     text-align:center;
     color:var(--white);
-    font-weight:400;
-    font-size:1rem;
+    font-weight:300;
+    
     line-height:1.25rem;
     margin-block-end:2rem;
+
+    font-size:.8rem;
+
+    @media (780px <= width <= 1280px){
+        font-size: 1rem;
+    }
+    @media (width > 1280px){
+        font-size: 1.2rem;
+    }
 
 }
 
