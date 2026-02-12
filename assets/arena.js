@@ -120,6 +120,36 @@ let buildModal = (blockData) => {
 			mediaHtml = `<p class='txt'>${ blockData.content.html }</p>`
 		}
 	}
+
+
+	// condition for attachment blocks
+	if (blockData.type == 'Attachment'){
+		let contentType = blockData.attachment.content.type
+		
+		// specifically for videos
+		if (contentType.includes('video')){
+			mediaHtml = `<video controls src="${ blockData.attachment.url}"></video>`
+		}
+
+		// specifically for audios
+		if (contentType.includes('audio')){
+			mediaHtml = `<audio controls src="${ blockData.attachment.url}"></audio>`
+		}
+
+		// specifically for pdfs
+		if (contentType.includes('pdf')){
+			mediaHtml = 
+			`
+			<p class="txt"> 
+				<a target="_blank" href="${ blockData.attachment.url}">
+					<i class="fa-solid fa-link" aria-hidden="true"></i>
+
+				</a>
+			</p>
+			`
+		}
+	}
+
 	// adding elements to html structure
 	let html =
 	`
