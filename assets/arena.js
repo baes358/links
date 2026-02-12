@@ -235,7 +235,7 @@ let renderBlock = (blockData) => {
 		// picture allows responsive images
 		let linkItem =
 			`
-			<li class="content">
+			<li class="content" data-block-id="${ blockData.id }">
 				${ titleHtml }
 
 				<figure>
@@ -320,7 +320,7 @@ let renderBlock = (blockData) => {
 
 			
 			`
-			<li class="content">
+			<li class="content" data-block-id="${ blockData.id }">
 				${ titleHtml }
 
 				<img 
@@ -367,7 +367,7 @@ let renderBlock = (blockData) => {
 		}
 
 		// create start of text block
-		let textItem = '<li class="content">'
+		let textItem = '<li class="content" data-block-id="${ blockData.id }">'
 
 		// if the block has a title, add the title as string
 		// += appends string
@@ -412,7 +412,7 @@ let renderBlock = (blockData) => {
 			// …still up to you, but we’ll give you the `video` element:
 			let videoItem =
 				`
-				<li class="content">
+				<li class="content" data-block-id="${ blockData.id }">
 					${ titleHtml }
 					<video controls src="${ blockData.attachment.url }"></video>
 				</li>
@@ -435,7 +435,7 @@ let renderBlock = (blockData) => {
 
 			let pdfItem =
 			`
-			<li class="content">
+			<li class="content" data-block-id="${ blockData.id }">
 				${ titleHtml} 
 			
 
@@ -460,7 +460,7 @@ let renderBlock = (blockData) => {
 			// …still up to you, but here’s an `audio` element:
 			let audioItem =
 				`
-				<li class="content">
+				<li class="content" data-block-id="${ blockData.id }">
 					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
 					
 					<audio controls src="${ blockData.attachment.url }"></audio>
@@ -512,7 +512,7 @@ let renderBlock = (blockData) => {
 			// …still up to you, but here’s an example `iframe` element:
 			let linkedVideoItem =
 				`
-				<li class="content">
+				<li class="content" data-block-id="${ blockData.id }">
 					${ titleHtml }
 					${ embedHtml }
 					${ descHtml }
@@ -537,7 +537,7 @@ let renderBlock = (blockData) => {
 
 			let linkedAudioItem =
 			`
-			<li class="content">
+			<li class="content" data-block-id="${ blockData.id }">
 				${ titleHtml }
 				${ embedHtml }
 				${ descHtml }
