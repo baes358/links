@@ -100,47 +100,70 @@ let renderBlock = (blockData) => {
 	else if (blockData.type == 'Image') {
 		// …up to you!
 		// create image variable
+
+
+		// declaring necessary variables
+		let titleHtml = ''
+		let linkHtml = ''
+		let altText = ''
+
+
+		// if the block has title, insert as html
+		if (blockData.title) {
+			titleHtml = `<h3>${ blockData.title}</h3>`
+		}
+
+		// if img alt text exists, add as html
+		if (blockData.image.alt_text) {
+			altText = blockData.image.alt_text
+		}
+
+		// if source url exists, add external link with link icon
+		if (blockData.source && blockData.source.url) {
+			linkHtml =
+			`
+			<a target="_blank" href="${ blockData.source.url}">
+				<i class="fa-solid fa-link" aria-hidden="true"></i>
+			</a>
+			`
+		}
+
+
+
 		let imageItem = 
 
-			// template literal -> multi-line string (Used AI tool, ChatGPT, to further break down and understand semantics of the condition)
-			// ${...} -> evaluate JS and insert result here
-			// blockData.title ? ... : ... -> ternary operator
-				// if blockData.title exists, insert html
-				// if not, insert empty string ''
+			// before
+				// ${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
+				// template literal -> multi-line string (Used AI tool, ChatGPT, to further break down and understand semantics of the condition)
+				// ${...} -> evaluate JS and insert result here
+				// blockData.title ? ... : ... -> ternary operator
+					// if blockData.title exists, insert html
+					// if not, insert empty string ''
 
-			// blockData.source && blockData.source.url -> if blockData exists and has URL, expression is true
-			// ? -> then
-			// : '' -> else, if no source URL, insert ''
-			// src="${ blockData.image.large.src_2x }"
-				// large retina image URL
-			// alt="${ blockData.image.alt_text || '' }">
-				// || '' -> if alt_text is missing, use an empty string
+				// blockData.source && blockData.source.url -> if blockData exists and has URL, expression is true
+				// ? -> then
+				// : '' -> else, if no source URL, insert ''
+				// src="${ blockData.image.large.src_2x }"
+					// large retina image URL
+				// alt="${ blockData.image.alt_text || '' }">
+					// || '' -> if alt_text is missing, use an empty string
 
+			// update
+				// simplify logic with variables created prior
 
+			
 			`
 			<li class="content">
-				${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
+				${ titleHtml }
 
 				<img 
 					src="${ blockData.image.large.src_2x }"
-					alt="${ blockData.image.alt_text || '' }">
+					alt="${ altText }">
+
 				<span class="link-icon">
-					${ blockData.source && blockData.source.url
-						?
-						`
-						<a target="_blank" href="${ blockData.source.url }">
-                        	<i class="fa-solid fa-link" aria-hidden="true"></i>
-							
-						</a>
-						`
-						: ''
-					}
+					${ linkHtml }
 
 				</span>
-				
-				
-			
-
 				
 			</li>
 			`
