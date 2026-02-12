@@ -347,9 +347,15 @@ let renderBlock = (blockData) => {
 		// Content prioritization logic.
 		// += clarified meaning of string concatenation through ChatGPT
 
-		
+		let titleHtml = ''
 		let bodyHtml = ''
+
 		let descHtml = ''
+
+
+		if (blockData.title){
+			titleHtml = `<h3>${ blockData.title }</h3>`
+		}
 
 		// first checks if blockData.content exists
 		// second checks if it has .html
@@ -367,28 +373,22 @@ let renderBlock = (blockData) => {
 		}
 
 		// create start of text block
-		let textItem = '<li class="content" data-block-id="${ blockData.id }">'
+		let textItem = 
+		`
+		<li class="content" data-block-id="${ blockData.id }">
+			${ titleHtml }
 
-		// if the block has a title, add the title as string
-		// += appends string
-		if (blockData.title) {
-			textItem += `<h3>${ blockData.title}</h3>`
-		}
+			<section class="txt">
+				${ bodyHtml }
+			</section>
 
-		// if main text content exists, add the text as string
-		// += appends string
-		if (bodyHtml) {
-			textItem += `<p class="txt">${ bodyHtml }</p>`
-		}
+			<section class="txt">
+				${ descHtml }
+			</section>
+		</li>
 
-		// if desc text content exists, add the text as string
-		// += appends string
-		if (descHtml) {
-			textItem += `<p class="desc-txt">${ descHtml }</p>`
-		}
+		`
 
-		// close out the html element list
-		textItem += '</li>'
 
 
 		channelBlocks.insertAdjacentHTML('beforeend', textItem)
@@ -617,5 +617,27 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		// console.log(blockData) // The data for a single block.
 
 		renderBlock(blockData) // Pass the single block’s data to the render function.
+	})
+
+	let channelBlocks = document.querySelector('#channel-blocks')
+
+	// to open the blocks with click
+	channelBlocks.addEventListener('click', (event) => {
+
+		// to find the clicked <li> element with the data block id
+		let clicked = event.target.closest('li[data-block-id]')
+		if (!clicked) return
+
+		// to get the id string from the attribute
+		let blockId = clicked.getAttribute('data-block-id')
+
+		// look up + search for the saved block data
+		let blockData = blocksById[blockId]
+		if (!blockData) return
+
+		// want to actually build the modal and open it
+		// use buildModal function implemented earlier
+		let modalHtml = buildModal(blockData)
+		openModal(modalHtml)
 	})
 })
