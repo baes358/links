@@ -5,6 +5,22 @@ let channelSlug = 'video-game-interfaces-x9glzuoklq' // The “slug” is just t
 let myUsername = 'sophia-bae-zsvqiaw7cdm' // For linking to your profile.
 
 
+// First, let’s lay out some *functions*, starting with our basic metadata:
+let placeChannelInfo = (channelData) => {
+	// Target some elements in your HTML:
+	let channelTitle = document.querySelector('#channel-title')
+	let channelDescription = document.querySelector('#channel-description')
+	let channelCount = document.querySelector('#channel-count')
+	let channelLink = document.querySelector('#channel-link')
+
+	// Then set their content/attributes to our data:
+	channelTitle.innerHTML = channelData.title
+	channelDescription.innerHTML = channelData.description ? channelData.description.html : ''
+	channelCount.innerHTML = channelData.counts.blocks
+	channelLink.href = `https://www.are.na/channel/${channelSlug}`
+}
+
+
 let blocksById = {}
 
 // retrieve elements from html
@@ -25,7 +41,7 @@ let openModal = (html) => {
 let closeModal = () => {
 	// first hide the modal
 	modal.close()
-	// remove existing old content so block is empty
+	// remove existing old content so block is empty for next open
 	modalBody.innerHTML = ''
 }
 
@@ -35,26 +51,62 @@ if (modalClose) {
 	modalClose.addEventListener('click', closeModal)
 }
 
-
-
-
-
-
-// First, let’s lay out some *functions*, starting with our basic metadata:
-let placeChannelInfo = (channelData) => {
-	// Target some elements in your HTML:
-	let channelTitle = document.querySelector('#channel-title')
-	let channelDescription = document.querySelector('#channel-description')
-	let channelCount = document.querySelector('#channel-count')
-	let channelLink = document.querySelector('#channel-link')
-
-	// Then set their content/attributes to our data:
-	channelTitle.innerHTML = channelData.title
-	channelDescription.innerHTML = channelData.description ? channelData.description.html : ''
-	channelCount.innerHTML = channelData.counts.blocks
-	channelLink.href = `https://www.are.na/channel/${channelSlug}`
+// when backdrop area is clicked, close modal
+if (modal){
+	modal.addEventListener('click', (event) => {
+		// === is a strict equality comparison of both value and data type
+		if (event.target === modal) {
+			closeModal()
+		}
+	})
 }
 
+
+// new function for modal blocks
+let buildModal = (blockData) => {
+	let titleText = blockData.type
+
+	if (blockData.title){
+		titleText = blockData.title
+	}
+}
+
+
+let titleHtml = `<h3>${ titleText }</h3>`
+
+let descHtml = ''
+if (blockData.description && blockData.description.html){
+	descHtml = blockData.description.html
+}
+
+// if description does not exist do nothing, if it does add
+let descSect = ''
+if (descHtml){
+	descSect = `<section>${ descHtml }</section>`
+}
+
+let mediaHtml = ''
+if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
+	mediaHtml = `<img src="${ blockData.image.large.src_2x }">`
+}
+
+// adding elements to html structure
+let html =
+`
+<header>
+	${ titleHtml}
+</header>
+
+<section>
+	${ mediaHtml}
+</section>
+
+<section>
+	${ descSect}
+</section>
+`
+
+return htm
 
 
 
