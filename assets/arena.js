@@ -109,7 +109,7 @@ let buildModal = (blockData) => {
 				altText = blockData.image.alt_text
 			}
 
-			mediaHtml = `<img src="${ blockData.image.large.src_2x }" alt="${ altText}>`
+			mediaHtml = `<img src="${ blockData.image.large.src_2x }" alt="${ altText}">`
 		}
 
 	}
@@ -117,14 +117,14 @@ let buildModal = (blockData) => {
 	// condition for text blocks
 	if (blockData.type == 'Text'){
 		if (blockData.content && blockData.content.html){
-			mediaHtml = `<p class='txt'>${ blockData.content.html }</p>`
+			mediaHtml = `<section class='txt'>${ blockData.content.html }</section>`
 		}
 	}
 
 
 	// condition for attachment blocks
 	if (blockData.type == 'Attachment'){
-		let contentType = blockData.attachment.content.type
+		let contentType = blockData.attachment.content_type
 		
 		// specifically for videos
 		if (contentType.includes('video')){
@@ -160,9 +160,10 @@ let buildModal = (blockData) => {
 	// adding elements to html structure
 	let html =
 	`
-	<h3>
+	<header>
 		${ titleHtml}
-	</h3>
+		${ linkHtml}
+	</header>
 
 	<figure>
 		${ mediaHtml}
