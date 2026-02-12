@@ -187,6 +187,9 @@ let renderBlock = (blockData) => {
 	// To start, a shared `ul` where we’ll insert all our blocks
 	let channelBlocks = document.querySelector('#channel-blocks')
 
+	// store blocks by their id
+	blocksById[blockData.id] = blockData
+
 	// Links!
 	if (blockData.type == 'Link') {
 		// Declares a “template literal” of the dynamic HTML we want.
@@ -214,7 +217,7 @@ let renderBlock = (blockData) => {
 		if (blockData.source && blockData.source.url){
 			linkHtml = 
 			`
-			<a target="_blank" href=${ blockData.source.url}">
+			<a target="_blank" href="${ blockData.source.url}">
 				<i class="fa-solid fa-link" aria-hidden="true"></i>
 			</a>
 			`
@@ -593,6 +596,8 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}`, (json) => {
 	console.log(json) // Always good to check your response!
 
 	placeChannelInfo(json) // Pass all the data to the first function, above.
+
+
 	renderUser(json.owner) // Pass just the nested object `.owner`.
 })
 
