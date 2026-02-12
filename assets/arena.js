@@ -64,6 +64,8 @@ if (modal){
 
 // new function for modal blocks
 let buildModal = (blockData) => {
+
+	//for pulling in title
 	let titleText = blockData.type
 
 	if (blockData.title){
@@ -71,6 +73,8 @@ let buildModal = (blockData) => {
 	}
 
 	let titleHtml = `<h3>${ titleText }</h3>`
+
+
 
 	// for descriptions of blocks in modal
 	let descHtml = ''
@@ -157,6 +161,11 @@ let buildModal = (blockData) => {
 		}
 	}
 
+
+
+	
+
+
 	// adding elements to html structure
 	let html =
 	`
@@ -190,364 +199,28 @@ let renderBlock = (blockData) => {
 	// store blocks by their id
 	blocksById[blockData.id] = blockData
 
-	// Links!
-	if (blockData.type == 'Link') {
-		// Declares a “template literal” of the dynamic HTML we want.
+	// want to only show thumbnail media initially
+	let thumbnail = ''
+	
 
-
-		// ${...} -> evaluate JS and insert result here
-			// blockData.title ? ... : ... -> ternary operator
-				// if blockData.title exists, insert html
-				// if not, insert empty string ''
-
-
-		let titleHtml = ''
-		let linkHtml = ''
-		let descHtml = ''
-
-		// if there is a title, insert title as h3 string
-		if (blockData.title) {
-			titleHtml = `<h3>${ blockData.title }</h3>`
-		}
-
-
-		// first checks if blockData.source exists
-		// second checks if it has .url
-		// if true, then use and insert html
-		if (blockData.source && blockData.source.url){
-			linkHtml = 
-			`
-			<a target="_blank" href="${ blockData.source.url}">
-				<i class="fa-solid fa-link" aria-hidden="true"></i>
-			</a>
-			`
-		}
-
-		// first checks if blockData.description exists
-		// second checks if it has .html
-		// if true, then use and insert html
-		if (blockData.description && blockData.description.html){
-			descHtml = blockData.description.html
-		}
-
-		// variable will store a string
-		// figure creates container for any media
-		// picture allows responsive images
-		let linkItem =
-			`
-			<li class="content" data-block-id="${ blockData.id }">
-				${ titleHtml }
-
-				<figure>
-					<picture>
-						<source media="(width < 500px)" srcset="${ blockData.image.small.src_2x }">
-						<source media="(width < 1000px)" srcset="${ blockData.image.medium.src_2x }">
-						<img alt="${ blockData.image.alt_text}" src="${ blockData.image.large.src_2x }">
-					</picture>
-
-					<span class="link-icon">
-						${ linkHtml }
-
-					</span>
-					<figcaption>
-						${ descHtml}
-					</figcaption>
-				</figure>
-			</li>
-			`
-
-		// And puts it into the page!
-		channelBlocks.insertAdjacentHTML('beforeend', linkItem)
-
-		// More on template literals:
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
+		thumbnail = blockData.image.large.src_2x
 	}
 
-	// Images!
-	else if (blockData.type == 'Image') {
-		// …up to you!
-		// create image variable
-
-
-		// declaring necessary variables
-		let titleHtml = ''
-		let linkHtml = ''
-		let altText = ''
-
-
-		// if the block has title, insert as html
-		if (blockData.title) {
-			titleHtml = `<h3>${ blockData.title}</h3>`
-		}
-
-		// if img alt text exists, add as html
-		if (blockData.image.alt_text) {
-			altText = blockData.image.alt_text
-		}
-
-		// if source url exists, add external link with link icon
-		if (blockData.source && blockData.source.url) {
-			linkHtml =
-			`
-			<a target="_blank" href="${ blockData.source.url}">
-				<i class="fa-solid fa-link" aria-hidden="true"></i>
-			</a>
-			`
-		}
-
-
-
-		let imageItem = 
-
-			// before
-				// ${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
-				// template literal -> multi-line string (Used AI tool, ChatGPT, to further break down and understand semantics of the condition)
-				// ${...} -> evaluate JS and insert result here
-				// blockData.title ? ... : ... -> ternary operator
-					// if blockData.title exists, insert html
-					// if not, insert empty string ''
-
-				// blockData.source && blockData.source.url -> if blockData exists and has URL, expression is true
-				// ? -> then
-				// : '' -> else, if no source URL, insert ''
-				// src="${ blockData.image.large.src_2x }"
-					// large retina image URL
-				// alt="${ blockData.image.alt_text || '' }">
-					// || '' -> if alt_text is missing, use an empty string
-
-			// update
-				// simplify logic with variables created prior
-
-			
-			`
-			<li class="content" data-block-id="${ blockData.id }">
-				${ titleHtml }
-
-				<img 
-					src="${ blockData.image.large.src_2x }"
-					alt="${ altText }">
-
-				<span class="link-icon">
-					${ linkHtml }
-
-				</span>
-				
-			</li>
-			`
-
-		channelBlocks.insertAdjacentHTML('beforeend', imageItem)
-
-
+	if (!thumbnail) {
+		console.log('NO THUMBNAIL')
 	}
+	let thumbItem = 
+	`
+	<li class="content" data-block-id="${ blockData.id }">
+		<img src="${ thumbnail }" alt="">
+	</li>
+	`
 
-	// Text!
-	else if (blockData.type == 'Text') {
-		// …up to you!
-		
-		// Content prioritization logic.
-		// += clarified meaning of string concatenation through ChatGPT
-
-		let titleHtml = ''
-		let bodyHtml = ''
-
-		let descHtml = ''
+	// And puts it into the page!
+	channelBlocks.insertAdjacentHTML('beforeend', thumbItem)
 
 
-		if (blockData.title){
-			titleHtml = `<h3>${ blockData.title }</h3>`
-		}
-
-		// first checks if blockData.content exists
-		// second checks if it has .html
-		// if true, then use
-		if (blockData.content && blockData.content.html){
-			bodyHtml = blockData.content.html
-		}
-
-		// first checks if blockData.description exists
-		// second checks if it has .html
-		// if true, then use
-
-		if (blockData.description && blockData.description.html){
-			descHtml = blockData.description.html
-		}
-
-		// create start of text block
-		let textItem = 
-		`
-		<li class="content" data-block-id="${ blockData.id }">
-			${ titleHtml }
-
-			<section class="txt">
-				${ bodyHtml }
-			</section>
-
-			<section class="txt">
-				${ descHtml }
-			</section>
-		</li>
-
-		`
-
-
-
-		channelBlocks.insertAdjacentHTML('beforeend', textItem)
-	}
-
-	// Uploaded (not linked) media…
-	else if (blockData.type == 'Attachment') {
-		let contentType = blockData.attachment.content_type // Save us some repetition.
-		let titleHtml = ''
-		let videoItem = ''
-		let pdfItem = ''
-		let audioItem = ''
-
-		// if block has a title then insert as html element
-		if (blockData.title) {
-			titleHtml = `<h3>${ blockData.title }</h3>`
-		}
-
-		// Uploaded videos!
-		if (contentType.includes('video')) {
-			// …still up to you, but we’ll give you the `video` element:
-			let videoItem =
-				`
-				<li class="content" data-block-id="${ blockData.id }">
-					${ titleHtml }
-					<video controls src="${ blockData.attachment.url }"></video>
-				</li>
-				`
-
-			channelBlocks.insertAdjacentHTML('beforeend', videoItem)
-
-			// More on `video`, like the `autoplay` attribute:
-			// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video
-		}
-
-		// Uploaded PDFs!
-		else if (contentType.includes('pdf')) {
-			// …up to you!
-
-			// if NO title, just return file type as string
-			if (!titleHtml){
-				titleHtml = `<h3>PDF</h3>`
-			}
-
-			let pdfItem =
-			`
-			<li class="content" data-block-id="${ blockData.id }">
-				${ titleHtml} 
-			
-
-				<p class="txt">
-					<a target="_blank" href="${ blockData.attachment.url}">
-						<i class="fa-solid fa-link" aria-hidden="true"></i>
-					</a>
-				</p>
-			</li>
-			`
-
-			channelBlocks.insertAdjacentHTML('beforeend', pdfItem)
-		}
-
-		// Uploaded audio!
-		else if (contentType.includes('audio')) {
-
-			// if NO title, just return file type as string
-			if (!titleHtml){
-				titleHtml = `<h3>MP3</h3>`
-			}
-			// …still up to you, but here’s an `audio` element:
-			let audioItem =
-				`
-				<li class="content" data-block-id="${ blockData.id }">
-					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
-					
-					<audio controls src="${ blockData.attachment.url }"></audio>
-				</li>
-				`
-
-			channelBlocks.insertAdjacentHTML('beforeend', audioItem)
-
-			// More on`audio`:
-			// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio
-		}
-	}
-
-	// Linked (embedded) media…
-	else if (blockData.type == 'Embed') {
-		let embedType = blockData.embed.type
-		let titleHtml = ''
-		let descHtml = ''
-		let embedHtml = ''
-		let linkedVideoItem = ''
-		let linkedAudioItem = ''
-
-
-		// if title exists
-		if (blockData.title){
-			titleHtml = `<h3>${ blockData.title}</h3>`
-		}
-
-		// if block has description, insert html content within variable
-		if (blockData.description && blockData.description.html){
-			descHtml = blockData.description.html
-		}
-
-		// if block has embed html, insert html content within variable
-		if (blockData.embed && blockData.embed.html){
-			embedHtml = blockData.embed.html
-		}
-
-
-
-		// Linked video!
-		if (embedType.includes('video')) {
-
-
-			// targeting the title if it does not exist, replace with media type
-			if (!titleHtml){
-				titleHtml = `<h3>MP4</h3>`
-			}
-			// …still up to you, but here’s an example `iframe` element:
-			let linkedVideoItem =
-				`
-				<li class="content" data-block-id="${ blockData.id }">
-					${ titleHtml }
-					${ embedHtml }
-					${ descHtml }
-
-				</li>
-				`
-
-			channelBlocks.insertAdjacentHTML('beforeend', linkedVideoItem)
-
-			// More on `iframe`:
-			// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
-		}
-
-		// Linked audio!
-		else if (embedType.includes('rich')) {
-			// …up to you!
-
-			// targeting the title if it does not exist, replace with media type
-			if (!titleHtml){
-				titleHtml = `<h3>MP3</h3>`
-			}
-
-			let linkedAudioItem =
-			`
-			<li class="content" data-block-id="${ blockData.id }">
-				${ titleHtml }
-				${ embedHtml }
-				${ descHtml }
-
-			</li>
-			`
-
-			channelBlocks.insertAdjacentHTML('beforeend', linkedAudioItem)
-		}
-	}
 }
 
 
