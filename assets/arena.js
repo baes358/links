@@ -69,44 +69,78 @@ let buildModal = (blockData) => {
 	if (blockData.title){
 		titleText = blockData.title
 	}
+
+	let titleHtml = `<h3>${ titleText }</h3>`
+
+	// for descriptions of blocks in modal
+	let descHtml = ''
+	if (blockData.description && blockData.description.html){
+		descHtml = blockData.description.html
+	}
+	// if description does not exist do nothing, if it does add
+	let descSect = ''
+	if (descHtml){
+		descSect = `<section>${ descHtml }</section>`
+	}
+
+	// for links of blocks in modal
+	let linkHtml = ''
+	if (blockData.source && blockData.source.url){
+		linkHtml = 
+		`
+		<a target="_blank" href=${ blockData.source.url}">
+			<i class="fa-solid fa-link" aria-hidden="true"></i>
+		</a>
+		`
+	}
+	
+	// MEDIA
+	// need media to change depending on block type
+	let mediaHtml = ''
+
+	// condition for both image / link separated by or operand
+	if (blockData.type == 'Image' || blockData.type == 'Link'){
+		// can apply this condition to both image and link types because they both use .image
+		if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
+
+			// making sure if block has any alt text
+			let altText = ''
+			if (blockData.image.alt){
+				altText = blockData.image.alt
+			}
+
+			mediaHtml = `<img src="${ blockData.image.large.src_2x }" alt="${ altText}>`
+		}
+
+	}
+
+	// condition for text blocks
+	if (blockData.type == 'Text'){
+		if (blockData.content && blockData.content.html){
+			mediaHtml = `<p class='txt'>${ blockData.content.html }</p>`
+		}
+	}
+	// adding elements to html structure
+	let html =
+	`
+	<header>
+		${ titleHtml}
+	</header>
+
+	<section>
+		${ mediaHtml}
+	</section>
+
+	<section>
+		${ descSect}
+	</section>
+	`
+
+	return html
+
 }
 
 
-let titleHtml = `<h3>${ titleText }</h3>`
-
-let descHtml = ''
-if (blockData.description && blockData.description.html){
-	descHtml = blockData.description.html
-}
-
-// if description does not exist do nothing, if it does add
-let descSect = ''
-if (descHtml){
-	descSect = `<section>${ descHtml }</section>`
-}
-
-let mediaHtml = ''
-if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
-	mediaHtml = `<img src="${ blockData.image.large.src_2x }">`
-}
-
-// adding elements to html structure
-let html =
-`
-<header>
-	${ titleHtml}
-</header>
-
-<section>
-	${ mediaHtml}
-</section>
-
-<section>
-	${ descSect}
-</section>
-`
-
-return htm
 
 
 
