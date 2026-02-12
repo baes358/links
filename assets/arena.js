@@ -88,7 +88,7 @@ let buildModal = (blockData) => {
 	if (blockData.source && blockData.source.url){
 		linkHtml = 
 		`
-		<a target="_blank" href=${ blockData.source.url}">
+		<a target="_blank" href="${ blockData.source.url}">
 			<i class="fa-solid fa-link" aria-hidden="true"></i>
 		</a>
 		`
@@ -105,8 +105,8 @@ let buildModal = (blockData) => {
 
 			// making sure if block has any alt text
 			let altText = ''
-			if (blockData.image.alt){
-				altText = blockData.image.alt
+			if (blockData.image.alt_text){
+				altText = blockData.image.alt_text
 			}
 
 			mediaHtml = `<img src="${ blockData.image.large.src_2x }" alt="${ altText}>`
@@ -150,20 +150,27 @@ let buildModal = (blockData) => {
 		}
 	}
 
+	// conditions for embedded media blocks
+	if (blockData.type =='Embed'){
+		if(blockData.embed && blockData.embed.html){
+			mediaHtml = blockData.embed.html
+		}
+	}
+
 	// adding elements to html structure
 	let html =
 	`
-	<header>
+	<h3>
 		${ titleHtml}
-	</header>
+	</h3>
 
-	<section>
+	<figure>
 		${ mediaHtml}
-	</section>
+	</figure>
 
-	<section>
+	<figcaption>
 		${ descSect}
-	</section>
+	</figcaption>
 	`
 
 	return html
