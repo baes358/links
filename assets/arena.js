@@ -5,6 +5,14 @@ let channelSlug = 'video-game-interfaces-x9glzuoklq' // The “slug” is just t
 let myUsername = 'sophia-bae-zsvqiaw7cdm' // For linking to your profile.
 
 
+let blocksById = {}
+
+// retrieve elements from html
+let modal = document.querySelector('#block-modal')
+let modalBody = document.querySelector('#modal-body')
+let modalClose = document.querySelector('#modal-close')
+
+
 
 
 // First, let’s lay out some *functions*, starting with our basic metadata:
