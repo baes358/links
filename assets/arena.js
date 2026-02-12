@@ -34,32 +34,56 @@ let renderBlock = (blockData) => {
 	if (blockData.type == 'Link') {
 		// Declares a “template literal” of the dynamic HTML we want.
 
+		let titleHtml = ''
+		let linkHtml = ''
+		let descHtml = ''
+
+		// if there is a title, insert title as h3 string
+		if (blockData.title) {
+			titleHtml = `<h3>${ blockData.title }</h3>`
+		}
+
+
+		// first checks if blockData.source exists
+		// second checks if it has .url
+		// if true, then use and insert html
+		if (blockData.source && blockData.source.url){
+			linkHtml = 
+			`
+			<a target="_blank" href=${ blockData.source.url}">
+				<i class="fa-solid fa-link" aria-hidden="true"></i>
+			</a>
+			`
+		}
+
+		// first checks if blockData.description exists
+		// second checks if it has .html
+		// if true, then use and insert html
+		if (blockData.description && blockData.description.html){
+			descHtml = blockData.description.html
+		}
+
+		// variable will store a string
+		// figure creates container for any media
+		// picture allows responsive images
 		let linkItem =
 			`
 			<li class="content">
-				${ blockData.title ? `<h3>${ blockData.title }</h3>` : '' }
+				${ titleHtml }
 
 				<figure>
 					<picture>
 						<source media="(width < 500px)" srcset="${ blockData.image.small.src_2x }">
 						<source media="(width < 1000px)" srcset="${ blockData.image.medium.src_2x }">
-						<img alt="${blockData.image.alt_text}" src="${ blockData.image.large.src_2x }">
+						<img alt="${ blockData.image.alt_text}" src="${ blockData.image.large.src_2x }">
 					</picture>
+
 					<span class="link-icon">
-						${ blockData.source && blockData.source.url
-							?
-							`
-							<a target="_blank" href="${ blockData.source.url }">
-								<i class="fa-solid fa-link" aria-hidden="true"></i>
-								
-							</a>
-							`
-							: ''
-						}
+						${ linkHtml }
 
 					</span>
 					<figcaption>
-						${ blockData.description ? blockData.description.html : ''}
+						${ descHtml}
 					</figcaption>
 				</figure>
 			</li>
