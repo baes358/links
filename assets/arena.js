@@ -321,6 +321,7 @@ let renderBlock = (blockData) => {
 		let descHtml = ''
 		let embedHtml = ''
 		let linkedVideoItem = ''
+		let linkedAudioItem = ''
 
 
 		// if title exists
@@ -368,12 +369,18 @@ let renderBlock = (blockData) => {
 		// Linked audio!
 		else if (embedType.includes('rich')) {
 			// …up to you!
+
+			// targeting the title if it does not exist, replace with media type
+			if (!titleHtml){
+				titleHtml = `<h3>MP3</h3>`
+			}
+
 			let linkedAudioItem =
 			`
 			<li class="content">
-				${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Audio</h3>`}
-				${blockData.embed.html}
-				${ blockData.description ? blockData.description.html : '' }
+				${ titleHtml }
+				${ embedHtml }
+				${ descHtml }
 
 			</li>
 			`
