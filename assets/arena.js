@@ -12,6 +12,31 @@ let modal = document.querySelector('#block-modal')
 let modalBody = document.querySelector('#modal-body')
 let modalClose = document.querySelector('#modal-close')
 
+// function to open the modal window and show html content
+let openModal = (html) => {
+	// insert html into modal body
+	modalBody.innerHTML = html
+	// show dialog
+	modal.showModal()
+}
+
+
+// function to close the modal window
+let closeModal = () => {
+	// first hide the modal
+	modal.close()
+	// remove existing old content so block is empty
+	modalBody.innerHTML = ''
+}
+
+
+// when close button (x) is clicked, close modal
+if (modalClose) {
+	modalClose.addEventListener('click', closeModal)
+}
+
+
+
 
 
 
