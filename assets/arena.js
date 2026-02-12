@@ -34,6 +34,13 @@ let renderBlock = (blockData) => {
 	if (blockData.type == 'Link') {
 		// Declares a “template literal” of the dynamic HTML we want.
 
+
+		// ${...} -> evaluate JS and insert result here
+			// blockData.title ? ... : ... -> ternary operator
+				// if blockData.title exists, insert html
+				// if not, insert empty string ''
+
+
 		let titleHtml = ''
 		let linkHtml = ''
 		let descHtml = ''
@@ -176,14 +183,10 @@ let renderBlock = (blockData) => {
 	// Text!
 	else if (blockData.type == 'Text') {
 		// …up to you!
-		// ${...} -> evaluate JS and insert result here
-			// blockData.title ? ... : ... -> ternary operator
-				// if blockData.title exists, insert html
-				// if not, insert empty string ''
-
+		
 		// Content prioritization logic.
+		// += clarified meaning of string concatenation through ChatGPT
 
-  		// The fallback chain below for the body variable (using logical OR operators, ||) was refined with AI (ChatGPT) to safely prioritize available API fields (content_html, content, description) without throwing errors.
 		
 		let bodyHtml = ''
 		let descHtml = ''
@@ -234,6 +237,15 @@ let renderBlock = (blockData) => {
 	// Uploaded (not linked) media…
 	else if (blockData.type == 'Attachment') {
 		let contentType = blockData.attachment.content_type // Save us some repetition.
+		let titleHtml = ''
+		let videoItem = ''
+		let pdfItem = ''
+		let audioItem = ''
+
+		// if block has a title then insert as html element
+		if (blockData.title) {
+			titleHtml = `<h3>${ blockData.title }</h3>`
+		}
 
 		// Uploaded videos!
 		if (contentType.includes('video')) {
@@ -241,7 +253,7 @@ let renderBlock = (blockData) => {
 			let videoItem =
 				`
 				<li class="content">
-					<p><em>Video</em></p>
+					${ titleHtml }
 					<video controls src="${ blockData.attachment.url }"></video>
 				</li>
 				`
@@ -255,10 +267,16 @@ let renderBlock = (blockData) => {
 		// Uploaded PDFs!
 		else if (contentType.includes('pdf')) {
 			// …up to you!
+
+			// if NO title, just return file type as string
+			if (!titleHtml){
+				titleHtml = `<h3>PDF</h3>`
+			}
+
 			let pdfItem =
 			`
 			<li class="content">
-				${ blockData.title ? `<h3>${ blockData.title} </h3>` : `<h3>PDF</h3>`} 
+				${ titleHtml} 
 			
 
 				<p class="txt">
@@ -274,6 +292,11 @@ let renderBlock = (blockData) => {
 
 		// Uploaded audio!
 		else if (contentType.includes('audio')) {
+
+			// if NO title, just return file type as string
+			if (!titleHtml){
+				titleHtml = `<h3>MP3</h3>`
+			}
 			// …still up to you, but here’s an `audio` element:
 			let audioItem =
 				`
@@ -294,6 +317,10 @@ let renderBlock = (blockData) => {
 	// Linked (embedded) media…
 	else if (blockData.type == 'Embed') {
 		let embedType = blockData.embed.type
+		let titleHtml = ''
+		let descHtml = ''
+		let embedHtml = ''
+		let embedItem = ''
 
 		// Linked video!
 		if (embedType.includes('video')) {
