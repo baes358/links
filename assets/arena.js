@@ -320,17 +320,41 @@ let renderBlock = (blockData) => {
 		let titleHtml = ''
 		let descHtml = ''
 		let embedHtml = ''
-		let embedItem = ''
+		let linkedVideoItem = ''
+
+
+		// if title exists
+		if (blockData.title){
+			titleHtml = `<h3>${ blockData.title}</h3>`
+		}
+
+		// if block has description, insert html content within variable
+		if (blockData.description && blockData.description.html){
+			descHtml = blockData.description.html
+		}
+
+		// if block has embed html, insert html content within variable
+		if (blockData.embed && blockData.embed.html){
+			embedHtml = blockData.embed.html
+		}
+
+
 
 		// Linked video!
 		if (embedType.includes('video')) {
+
+
+			// targeting the title if it does not exist, replace with media type
+			if (!titleHtml){
+				titleHtml = `<h3>MP4</h3>`
+			}
 			// …still up to you, but here’s an example `iframe` element:
 			let linkedVideoItem =
 				`
 				<li class="content">
-					${ blockData.title ? `<h3>${ blockData.title}</h3>` : `<h3>Video</h3>`}
-					${ blockData.embed.html }
-					${ blockData.description ? blockData.description.html : '' }
+					${ titleHtml }
+					${ embedHtml }
+					${ descHtml }
 
 				</li>
 				`
