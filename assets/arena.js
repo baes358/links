@@ -22,31 +22,7 @@ let placeChannelInfo = (channelData) => {
 	channelLink.href = `https://www.are.na/channel/${channelSlug}`
 }
 
-// declare function txtString
-// take argument "value"
-// This pattern was developed with assistance from an AI tool (ChatGPT) to safely normalize Are.na API text fields into renderable strings.
-// It prevents "[object Object]" errors when API values are returned as nested objects (e.g., { html: "..." }).
-// The process checks the values through if statements, and if they do not match any, it returns an empty string as the value.
 
-let txtString = (value) => {
-
-	// Defensive guard clause (pattern discussed with AI assistance, ChatGPT)
-	// prevents runtime errors if expected DOM containers are missing.
-	// if value has nothing, return empty string
-	if (!value) return ''
-
-	// if already a string, return string
- 	if (typeof value === 'string') return value
-
-	 // common Are.na shape: { html: "..." }
-	if (typeof value === 'object' && value.html) return value.html
-
-	// other possible shapes: { content: "..."} etc.
-	if (typeof value === 'object' && value.content) return value.content
-
-	// if no fits to previous types, return empty
-	return ''
-}
 
 
 // Then our big function for specific-block-type rendering:
@@ -162,36 +138,50 @@ let renderBlock = (blockData) => {
 
   		// The fallback chain below for the body variable (using logical OR operators, ||) was refined with AI (ChatGPT) to safely prioritize available API fields (content_html, content, description) without throwing errors.
 		
-		
-		let body = 
-			// or operator || -> return first true value
-			// implements the txtString function defined outside of the renderBlock function, and it applies the conditions to different properties of blockData in the order stated below
-			txtString(blockData.content_html) || txtString(blockData.content) || txtString(blockData.description)
+		let bodyHtml = ''
+		let descHtml = ''
 
-			// if (blockData.content_html){
-			// 	body = blockData.content_html
-			// } else if (blockData.content){
-			// 	body = blockData.content
-			// } else if (blockData.description && blockData.description.html){
-			// 	body = blockData.description.html
-			// }
-		
+		// first checks if blockData.content exists
+		// second checks if it has .html
+		// if true, then use
+		if (blockData.content && blockData.content.html){
+			bodyHtml = blockData.content.html
+		}
 
-		// blockData.content_html ? blockData.content_html : (blockData.content ? blockData.content : '')
+		// first checks if blockData.description exists
+		// second checks if it has .html
+		// if true, then use
 
-		let textItem =
+		if (blockData.description && blockData.description.html){
+			descHtml = blockData.description.html
+		}
 
-			// if true, return title in h3 tags. if false, return empty
-			`
-			<li class="content">
-				${ blockData.title ? `<h3>${ blockData.title}</h3>` : ''}
+		// create start of text block
+		let textItem = '<li class="content">'
 
-				${ body ? `<p class="txt">${ body }</p>` : ''}
-			</li>
+		// if the block has a title, add the title as string
+		// += appends string
+		if (blockData.title) {
+			textItem += `<h3>${ blockData.title}</h3>`
+		}
 
-			`
+		// if main text content exists, add the text as string
+		// += appends string
+		if (bodyHtml) {
+			textItem += `<p class="txt">${ bodyHtml }</p>`
+		}
 
-			channelBlocks.insertAdjacentHTML('beforeend', textItem)
+		// if desc text content exists, add the text as string
+		// += appends string
+		if (descHtml) {
+			textItem += `<p class="desc-txt">${ descHtml }</p>`
+		}
+
+		// close out the html element list
+		textItem += '</li>'
+
+
+		channelBlocks.insertAdjacentHTML('beforeend', textItem)
 	}
 
 	// Uploaded (not linked) media…
