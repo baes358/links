@@ -9,6 +9,24 @@
     font-weight: 400; /* or normal */
     font-style: normal;
 }
+@font-face {
+    font-family: 'Zen';
+    src: url('../fonts/ZenDots-Regular.ttf') format('truetype');
+    font-weight: 400; /* or normal */
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Aldrich';
+    src: url('../fonts/Aldrich-Regular.ttf') format('truetype');
+    font-weight: 400; /* or normal */
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Audio';
+    src: url('../fonts/Audiowide-Regular.ttf') format('truetype');
+    font-weight: 400; /* or normal */
+    font-style: normal;
+}
 
 
 :root{
@@ -18,18 +36,26 @@
 
     --white: #edecef;
     --black: #000;
-    --green: #009957;
+    --green: #00ad62;
+    --gray1: #0A0520;
+    --gray2: #242630;
+    --gray3: #20373F;
+    --green1: #00D4AC;
+    --yellow: #E8FD5F;
 
 }   
 
 html{
-    background:var(--green);
+    background:var(--gray2);
+    cursor:url('../media/crosshair.png'),auto;
 }
 body{
+    /* background:var(--green); */
     height:100%;
     overflow-x: hidden;
     overflow-y: visible;
 }
+
 
 nav{
     position:sticky;
@@ -87,23 +113,22 @@ nav ul li:hover{
 } */
 
 hgroup{
-    margin-inline:2rem;
-    margin-block:5rem;
+    padding-inline:2rem;
+    padding-block:5rem;
     position:relative;
-
+    /* background:var(--black); */
     z-index:5;
 }
 
 
 h1{
-    font-family: 'Jacquard';
+    font-family: 'zen';
     position:relative;
     /* text-transform:lowercase; */
     text-align:center;
     font-size: 3rem;
     letter-spacing:.02em;
-    line-height:2.5rem;
-    color:var(--white);
+    line-height:3rem;
     margin-block-end:1.5rem;
 
 
@@ -117,6 +142,12 @@ h1{
     
 
 }
+#channel-title{
+    background-image: linear-gradient(to bottom, var(--green1), var(--yellow));
+    color: transparent;
+    background-clip: text;
+}
+
 h2{
     font-family:'Reddit';
     text-align:center;
@@ -208,23 +239,35 @@ hgroup p{
 #channel-blocks{
     display:grid;
     grid-template-columns:repeat(2,1fr);
+    margin-block:3rem;
+
 }
+
+
 
 main .content{
     /* display:block; */
     /* margin-inline:auto; */
-    width:50vw;
+    width:5rem;
     z-index:5;
     margin-block:3rem;
+
     /* padding:1rem; */
     /* background:rgba(0,0,0,0.7); */
     /* border:solid var(--black) 2px; */
-    border-radius: 5px;
-    filter:blur(5px);
+    /* filter:blur(5px); */
     opacity:1;
 }
-main .content:hover{
-    filter:blur(0px);
+
+
+.content img{
+    filter: blur(2px) contrast(140%);
+}
+
+.content img:hover {
+    filter: none;
+    cursor:url('../media/cursor.png'),auto;
+
 }
 /* video content how-to? */
 /* main video{
@@ -312,6 +355,27 @@ main .desc-txt{
 }
 i.fa-link{
     color:var(--white);
+}
+.placeholder{
+    color:var(--white);
+}
+
+.thumb-placeholder{
+  width: 100%;
+  aspect-ratio: 1 / 1;       /* keep tiles square */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+.thumb-placeholder p{
+  margin: 0;
+  max-width: 100%;
+
+/* breaks super_long_strings.mp3 */
+  overflow-wrap: anywhere;   
+  word-break: break-word;
 }
 
 

@@ -193,31 +193,52 @@ let buildModal = (blockData) => {
 
 // Then our big function for specific-block-type rendering:
 let renderBlock = (blockData) => {
-	// To start, a shared `ul` where we’ll insert all our blocks
-	let channelBlocks = document.querySelector('#channel-blocks')
-
-	// store blocks by their id
-	blocksById[blockData.id] = blockData
-
-	// want to only show thumbnail media initially
-	let thumbnail = ''
+	// To start, a shared ul where we’ll insert all our blocks 
+	let channelBlocks = document.querySelector('#channel-blocks') 
+	// store blocks by their id 
+	blocksById[blockData.id] = blockData 
+	// want to only show thumbnail media initially 
+	
+	let thumbnail = '' 
+	let thumbMedia = ''
 	
 
-	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
-		thumbnail = blockData.image.large.src_2x
-	}
+	// block has thumbnail image
+	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){ 
+		thumbnail = blockData.image.large.src_2x 
 
-	if (!thumbnail) {
-		console.log('NO THUMBNAIL')
-	}
-	let thumbItem = 
-	`
-	<li class="content" data-block-id="${ blockData.id }">
-		<img src="${ thumbnail }" alt="">
-	</li>
-	`
+		thumbMedia =
+		`
+		<img src="${ thumbnail }" >
+		`
+	} 
+	
+	// if block has no thumbnail image
+	else {
+		let blockTitle = ''
 
-	// And puts it into the page!
+		if (blockData.title){
+			blockTitle = blockData.title
+		}
+		else {
+			blockTitle = blockData.type
+		}
+
+		thumbMedia =
+		`
+		<section class="thumb-placeholder">
+    		<p>${ blockTitle }</p>
+  		</section>
+		`
+	}
+	
+	thumbItem = 
+	`
+	<li class="content" data-block-id="${ blockData.id }"> 
+		${ thumbMedia }
+	</li> 
+	`
+	// And puts it into the page! 
 	channelBlocks.insertAdjacentHTML('beforeend', thumbItem)
 
 
