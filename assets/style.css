@@ -124,12 +124,13 @@ hgroup{
 h1{
     font-family: 'zen';
     position:relative;
-    /* text-transform:lowercase; */
+    text-transform:uppercase;
     text-align:center;
     font-size: 3rem;
     letter-spacing:.02em;
     line-height:3rem;
     margin-block-end:1.5rem;
+
 
 
     @media (780px <= width <= 1280px){
@@ -361,21 +362,33 @@ i.fa-link{
 }
 
 .thumb-placeholder{
-  width: 100%;
-  aspect-ratio: 1 / 1;       /* keep tiles square */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  text-align: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;       /* keep tiles square */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    /* background: linear-gradient(to bottom, var(--green1), var(--yellow)); */
+    background:var(--gray1);
+    filter:grayscale(50%);
+    filter:blur(5px);
+
+}
+.thumb-placeholder:hover{
+    filter:none;
 }
 .thumb-placeholder p{
-  margin: 0;
-  max-width: 100%;
+    font-family:'Reddit';
+    font-weight:500;
+    margin: 0;
+    max-width: 100%;
+    font-size:.75rem;
+    line-height: 1rem;
+    
 
-/* breaks super_long_strings.mp3 */
-  overflow-wrap: anywhere;   
-  word-break: break-word;
+    /* breaks super_long_strings.mp3 */
+    overflow-wrap:break-word;   
 }
 
 
