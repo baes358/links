@@ -61,6 +61,18 @@ if (modal){
 	})
 }
 
+// new function for nav toggles
+let getKind = (blockData) => {
+	if (blockData.type == 'Image'){
+		return 'IMG'
+	}
+	else if (blockData.type == 'Text'){
+		return 'TXT'
+	}
+	else if (blockData.type == 'Link'){
+		return 'URL'
+	}
+}
 
 // new function for modal blocks
 let buildModal = (blockData) => {
