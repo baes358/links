@@ -72,6 +72,31 @@ let getKind = (blockData) => {
 	else if (blockData.type == 'Link'){
 		return 'URL'
 	}
+	else if (blockData.type == 'Attachment'){
+		let contentType = blockData.attachment.content_type
+
+		if (contentType.includes('Audio')){
+			return 'MP3'
+		}
+		else if (contentType.includes('Video')){
+			return 'MP4'
+		}
+		else if (contentType.includes('pdf')){
+			return 'URL'
+		}
+	}
+	else if (blockData.type == 'Embed'){
+		let embedType = blockData.embed.type
+
+		if (contentType.includes('rich')){
+			return 'MP3'
+		}
+		else if (contentType.includes('Video')){
+			return 'MP4'
+		}
+		
+	}
+	return 'URL'
 }
 
 // new function for modal blocks
@@ -213,6 +238,7 @@ let renderBlock = (blockData) => {
 	
 	let thumbnail = '' 
 	let thumbMedia = ''
+	let kind = getKind(blockData)
 	
 
 	// block has thumbnail image
@@ -246,7 +272,7 @@ let renderBlock = (blockData) => {
 	
 	thumbItem = 
 	`
-	<li class="content" data-block-id="${ blockData.id }"> 
+	<li class="content" data-block-id="${ blockData.id }" data-kind="${ kind }"> 
 		${ thumbMedia }
 	</li> 
 	`
