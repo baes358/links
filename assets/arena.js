@@ -75,10 +75,10 @@ let getKind = (blockData) => {
 	else if (blockData.type == 'Attachment'){
 		let contentType = blockData.attachment.content_type
 
-		if (contentType.includes('Audio')){
+		if (contentType.includes('audio')){
 			return 'MP3'
 		}
-		else if (contentType.includes('Video')){
+		else if (contentType.includes('video')){
 			return 'MP4'
 		}
 		else if (contentType.includes('pdf')){
@@ -88,10 +88,10 @@ let getKind = (blockData) => {
 	else if (blockData.type == 'Embed'){
 		let embedType = blockData.embed.type
 
-		if (contentType.includes('rich')){
+		if (embedType.includes('rich')){
 			return 'MP3'
 		}
-		else if (contentType.includes('Video')){
+		else if (embedType.includes('video')){
 			return 'MP4'
 		}
 		
@@ -282,6 +282,45 @@ let renderBlock = (blockData) => {
 
 }
 
+// creating filtering / toggles for the navigation menu
+// function for applying the actual filters
+let applyFilters = () => {
+	// what kinds of data are currently on
+	let actives = {}
+
+	let toggle = document.querySelectorAll('.filter-toggle')
+
+	toggle.forEach((button) => {
+		let kind = button.getAttribute('data-kind')
+		let on = button.getAttribute('aria-pressed') == 'true'
+		actives[kind] = on
+	})
+
+	let blockContent = document.querySelectorAll('#channel-blocks .content')
+
+	blockContent.forEach((item) => {
+		let kind = item.getAttribute('data-kind')
+		let show = actives[kind]
+		item.hidden = !show
+	})
+
+
+}
+
+// setting up the actual filters for each respective block
+let setFilters = () => {
+	let toggle = document.querySelectorAll('.filter-toggle')
+
+	toggle.forEach((button) => {
+		button.addEventListener('click', () => {
+			let current = button.getAttribute('aria-pressed') == 'true'
+			button.setAttribute('aria-pressed', current ? 'false' : 'true')
+
+			applyFilters()
+		})
+	})
+	applyFilters()
+}
 
 
 // A function to display the owner/collaborator info:
@@ -350,6 +389,8 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 
 		renderBlock(blockData) // Pass the single block’s data to the render function.
 	})
+
+	setFilters()
 
 	let channelBlocks = document.querySelector('#channel-blocks')
 

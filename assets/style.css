@@ -60,9 +60,10 @@ body{
 nav{
     position:sticky;
     top:3rem;
-    z-index:6;
+    z-index:50;
 }
 nav ul{
+    list-style:none;
     display:flex;
     flex-direction:row;
     justify-content:space-evenly
@@ -75,6 +76,48 @@ nav ul li{
 nav ul li:hover{
     color:var(--white);
     text-decoration: underline;
+}
+button.filter-toggle{
+    /* background: var(--gray1); */
+    color: var(--white);
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    cursor:url('../media/cursor.png'),auto;
+}
+button.filter-toggle:focus{
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
+/* base state of toggles */
+section.filter-switch .on,
+section.filter-switch .off{
+    background: var(--gray1);
+    color:var(--white);
+  /* opacity: 0.7; */
+  padding: 0.15rem 0.45rem;
+}
+
+
+/* ON state highlight */
+button.filter-toggle[aria-pressed="true"] .filter-switch .on{
+    background: var(--white);
+    color: black;
+    opacity: 1;
+}
+/* OFF state highlight */
+button.filter-toggle[aria-pressed="false"] .filter-switch .off{
+  
+    background: var(--white);
+    color: black;
+    opacity: 1;
+}
+
+section.filter-switch{
+    border: 1px solid var(--white);
+
 }
 
 
