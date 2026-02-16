@@ -218,6 +218,15 @@ let buildModal = (blockData) => {
 		if(blockData.embed && blockData.embed.html){
 			mediaHtml = blockData.embed.html
 		}
+
+		if (blockData.source && blockData.source.url){
+			if (blockData.source.url.includes('behance.net')){
+				mediaHtml = 
+				`
+				<p class="txt">[ EXTERNAL SITE ]</p>
+				`
+			}
+		}
 	}
 
 
