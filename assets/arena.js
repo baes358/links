@@ -63,6 +63,7 @@ if (modal) {
 
 
 
+
 // new function for nav toggles
 let getKind = (blockData) => {
 	if (blockData.type == 'Image'){
@@ -99,6 +100,18 @@ let getKind = (blockData) => {
 		
 	}
 	return 'URL'
+}
+
+// function to get images
+let getImageUrl = (blockData) => {
+	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
+		return blockData.image.large.src_2x
+	}
+
+	if (blockData.image && blockData.image.original && blockData.image.original.url){
+		return blockData.image.original.url
+	}
+	return ''
 }
 
 // new function for modal blocks
@@ -143,17 +156,18 @@ let buildModal = (blockData) => {
 
 	// condition for both image / link separated by or operand
 	if (blockData.type == 'Image' || blockData.type == 'Link'){
-		// can apply this condition to both image and link types because they both use .image
-		if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
 
-			// making sure if block has any alt text
-			let altText = ''
-			if (blockData.image.alt_text){
-				altText = blockData.image.alt_text
-			}
+		let imageUrl = getImageUrl(blockData)
+		let altText = ''
 
-			mediaHtml = `<img src="${ blockData.image.large.src_2x }" alt="${ altText}">`
+		if (blockData.image && blockData.image.alt_text){
+			altText = blockData.image.alt_text
 		}
+
+		if (imageUrl){
+			mediaHtml = `<img src="${ imageUrl }" alt="${ altText }">`
+		}
+		
 
 	}
 
