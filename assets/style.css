@@ -449,14 +449,58 @@ iframe{
     color: transparent;
     background-clip: text;
 }
+.modal figure {
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 900px;
+  height: auto;        /* important */
+  min-height: 0;       /* important if flex is involved */
+
+}
+
+
+.modal img,
+.modal video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.modal .audio-wrap{
+    width: 80%;
+    margin: 1rem auto 0;
+    padding: 0.75rem;
+
+    border: 1px solid var(--white);
+    background: rgba(255,255,255,0.06);
+
+}
+.modal .audio-wrap audio{
+  display: block;
+  width: 80%;
+  margin: 1rem auto 0;
+
+  filter: none;     /* important */
+  opacity: 1;
+  background: transparent;
+}
+
+
+.modal::-webkit-scrollbar {
+    width: 5px;
+}
 
 .modal::-webkit-scrollbar-track {
-    background: linear-gradient(to bottom, var(--green1), var(--yellow));
+    background: transparent;
+    /* border-left: 1px solid var(--purp); */
 }
 
 .modal::-webkit-scrollbar-thumb {
-    background: var(--green1);
-    border-radius: 0;
+    background: linear-gradient(
+        to bottom,
+        var(--purp),
+        var(--teal)
+    );
 }
 
 

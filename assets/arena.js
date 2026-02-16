@@ -92,7 +92,7 @@ let getKind = (blockData) => {
 		let embedType = blockData.embed.type
 
 		if (embedType.includes('rich')){
-			return 'MP3'
+			return 'URL'
 		}
 		else if (embedType.includes('video')){
 			return 'MP4'
@@ -185,16 +185,19 @@ let buildModal = (blockData) => {
 		
 		// specifically for videos
 		if (contentType.includes('video')){
-			mediaHtml = `<video controls src="${ blockData.attachment.url}"></video>`
+			mediaHtml = `<video controls src="${ blockData.attachment.url }"></video>`
 		}
-
 		// specifically for audios
-		if (contentType.includes('audio')){
-			mediaHtml = `<audio controls src="${ blockData.attachment.url}"></audio>`
+		else if (contentType.includes('audio')){
+			mediaHtml = 
+			`
+			<section class="audio-wrap">
+				<audio controls src="${ blockData.attachment.url}"></audio>
+			</secion>
+			`
 		}
-
 		// specifically for pdfs
-		if (contentType.includes('pdf')){
+		else if (contentType.includes('pdf')){
 			mediaHtml = 
 			`
 			<p class="txt"> 
@@ -204,6 +207,9 @@ let buildModal = (blockData) => {
 				</a>
 			</p>
 			`
+		}
+		else if (contentType.includes('image')){
+			mediaHtml = `<img src="${ blockData.attachment.url }" alt="">`
 		}
 	}
 
