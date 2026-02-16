@@ -26,7 +26,6 @@ let blocksById = {}
 // retrieve elements from html
 let modal = document.querySelector('#block-modal')
 let modalBody = document.querySelector('#modal-body')
-let modalClose = document.querySelector('#modal-close')
 
 // function to open the modal window and show html content
 let openModal = (html) => {
@@ -42,24 +41,27 @@ let closeModal = () => {
 	// first hide the modal
 	modal.close()
 	// remove existing old content so block is empty for next open
-	modalBody.innerHTML = ''
+	// modalBody.innerHTML = ''
 }
 
 
 // when close button (x) is clicked, close modal
-if (modalClose) {
-	modalClose.addEventListener('click', closeModal)
-}
-
-// when backdrop area is clicked, close modal
-if (modal){
+if (modal) {
 	modal.addEventListener('click', (event) => {
-		// === is a strict equality comparison of both value and data type
+
+		// .closest() -> find the nearest parent element that matches a selector
+		if (event.target && event.target.closest && event.target.closest('#modal-close')) {
+			closeModal()
+			return
+		}
+		// when backdrop area is clicked, close modal
 		if (event.target === modal) {
 			closeModal()
 		}
 	})
 }
+
+
 
 // new function for nav toggles
 let getKind = (blockData) => {
@@ -199,14 +201,20 @@ let buildModal = (blockData) => {
 	}
 
 
-
+	let kind = getKind(blockData)
 	
 
 
 	// adding elements to html structure
 	let html =
 	`
+
+	<section class="modal-kind">
+		<p>${ kind }</p>
+
+	</section>
 	<header>
+
 		${ titleHtml}
 		${ linkHtml}
 	</header>
