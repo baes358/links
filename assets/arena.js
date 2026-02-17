@@ -27,34 +27,46 @@ let blocksById = {}
 let modal = document.querySelector('#block-modal')
 let modalBody = document.querySelector('#modal-body')
 
-// function to open the modal window and show html content
+
+// Attribution to LLM (ChatGPT): it suggested using <dialog>.showModal() and body scroll locking in the background.
+// My understanding: This openModal function injects the block's HTML into the modal first, then opens the dialog window.
+
 let openModal = (html) => {
 	// insert html into modal body
-	modalBody.innerHTML = html
-	// show dialog
-	modal.showModal()
+	modalBody.innerHTML = html 	
+
+	// open the <dialog> element with .showModal()
+	modal.showModal() 
+	
+	// adding a class to the element prevents scrolling so that the window is fixed on screen.
+	document.body.classList.add('modal-open') 
 }
 
 
-// function to close the modal window
+// Attribution to LLM (ChatGPT): it suggested using <dialog>.close() and removing the body scroll locking in the background.
+// My understanding: This closeModal function closes the modal first, then resumes regular page scrolling.
 let closeModal = () => {
 	// first hide the modal
-	modal.close()
-	// remove existing old content so block is empty for next open
-	// modalBody.innerHTML = ''
+	modal.close() 
+
+	// allow page scroll again
+	document.body.classList.remove('modal-open') 
+	
 }
 
 
-// when close button (x) is clicked, close modal
+// Attribution to LLM (ChatGPT): It suggested assigning the click event with .closest() so clicks on child elements still work for the user
+// My understanding: This function checks what was clicked.
+
 if (modal) {
 	modal.addEventListener('click', (event) => {
-
-		// .closest() -> find the nearest parent element that matches a selector
+		// event.target is the exact element that's clicked on
+		// .closest() -> find the nearest parent element that matches a selector and checks if the close button was clicked
 		if (event.target && event.target.closest && event.target.closest('#modal-close')) {
 			closeModal()
 			return
 		}
-		// when backdrop area is clicked, close modal
+		// when backdrop area is clicked, close the modal
 		if (event.target === modal) {
 			closeModal()
 		}
@@ -63,8 +75,10 @@ if (modal) {
 
 
 
+// Attribution to LLM (ChatGPT): I was trying to figure out a sorting/categorization method to help structure this as a mapping function for the different media types.
 
-// new function for nav toggles
+// My understanding: getKind function returns a short label used for titles on modal windows and filtering.
+
 let getKind = (blockData) => {
 	if (blockData.type == 'Image'){
 		return 'IMG'
@@ -99,25 +113,39 @@ let getKind = (blockData) => {
 		}
 		
 	}
-	return 'URL'
+	// fallback when type doesn’t match above
+	return 'URL' 
 }
 
-// function to get images
+
+
+
+// Attribution to LLM (ChatGPT): It suggested a “fallback ladder” to avoid missing images, especially for the thumbnails on the main page.
+// My understanding: getImageUrl function returns the best available image URL for a block, or '' if none exists.
 let getImageUrl = (blockData) => {
+
+	// prefer large quality pictures for thumbnails + modals
 	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
 		return blockData.image.large.src_2x
 	}
 
+	// fallback to original if large size isn’t available
 	if (blockData.image && blockData.image.original && blockData.image.original.url){
 		return blockData.image.original.url
 	}
+
+	// when no image is found return empty
 	return ''
 }
 
-// new function for modal blocks
+
+
+
+// Attribution to LLM (ChatGPT): It helped propose this “build HTML string from blockData” pattern so that I could insert the necessary HTML strings into my modal window
+// My understanding: buildModal function basically converts an Are.na block object into HTML to display in the modal.
 let buildModal = (blockData) => {
 
-	//for pulling in title
+	// Decide title text from block title, if none, show block type
 	let titleText = blockData.type
 
 	if (blockData.title){
@@ -128,18 +156,18 @@ let buildModal = (blockData) => {
 
 
 
-	// for descriptions of blocks in modal
+	// Description HTML -> Are.na provides description.html
 	let descHtml = ''
 	if (blockData.description && blockData.description.html){
 		descHtml = blockData.description.html
 	}
-	// if description does not exist do nothing, if it does add
+	// if description does not exist do nothing, if it does add section
 	let descSect = ''
 	if (descHtml){
 		descSect = `<section>${ descHtml }</section>`
 	}
 
-	// for links of blocks in modal
+	// External link HTML -> for if the block has a source URL
 	let linkHtml = ''
 	if (blockData.source && blockData.source.url){
 		linkHtml = 
@@ -154,10 +182,11 @@ let buildModal = (blockData) => {
 	// need media to change depending on block type
 	let mediaHtml = ''
 
-	// condition for both image / link separated by or operand
+	// condition for both image / link separated by or operand and if they both share blockData.image
 	if (blockData.type == 'Image' || blockData.type == 'Link'){
 
-		let imageUrl = getImageUrl(blockData)
+		// helper function getImageUrl()
+		let imageUrl = getImageUrl(blockData) 
 		let altText = ''
 
 		if (blockData.image && blockData.image.alt_text){
@@ -171,7 +200,7 @@ let buildModal = (blockData) => {
 
 	}
 
-	// condition for text blocks
+	// Are.na already provides HTML in blockData.content.html
 	if (blockData.type == 'Text'){
 		if (blockData.content && blockData.content.html){
 			mediaHtml = `<section class='txt'>${ blockData.content.html }</section>`
@@ -179,7 +208,7 @@ let buildModal = (blockData) => {
 	}
 
 
-	// condition for attachment blocks
+	// using content_type to decide which HTML element to use from ATTACHMENT blocks
 	if (blockData.type == 'Attachment'){
 		let contentType = blockData.attachment.content_type
 		
@@ -193,7 +222,7 @@ let buildModal = (blockData) => {
 			`
 			<section class="audio-wrap">
 				<audio controls src="${ blockData.attachment.url}"></audio>
-			</secion>
+			</section>
 			`
 		}
 		// specifically for pdfs
@@ -214,11 +243,14 @@ let buildModal = (blockData) => {
 	}
 
 	// conditions for embedded media blocks
+	// embed HTML is already provided by Are.na, but some external sites (Behance) block iframes
+
 	if (blockData.type =='Embed'){
 		if(blockData.embed && blockData.embed.html){
 			mediaHtml = blockData.embed.html
 		}
 
+		// Behance-specific blocks don't display the necessary media embeds, so it shows a placeholder instead in these cases
 		if (blockData.source && blockData.source.url){
 			if (blockData.source.url.includes('behance.net')){
 				mediaHtml = 
@@ -230,11 +262,12 @@ let buildModal = (blockData) => {
 	}
 
 
+	// kind label used for classification of block that is displayed on top of modal
 	let kind = getKind(blockData)
 	
 
 
-	// adding elements to html structure
+	// adding elements to html structure for final html output
 	let html =
 	`
 
@@ -266,10 +299,13 @@ let buildModal = (blockData) => {
 
 
 // Then our big function for specific-block-type rendering:
+
+// Attribution to LLM (ChatGPT): It suggested showing  thumbnails of blocks as a render approach for a clean grid view that users can navigate throughout
+// My understanding: renderBlock() function creates an <li> with a thumbnail image or placeholder text if it does not exist.
 let renderBlock = (blockData) => {
 	// To start, a shared ul where we’ll insert all our blocks 
 	let channelBlocks = document.querySelector('#channel-blocks') 
-	// store blocks by their id 
+	// store blocks by their id so modal can look it up later
 	blocksById[blockData.id] = blockData 
 	// want to only show thumbnail media initially 
 	
@@ -288,7 +324,7 @@ let renderBlock = (blockData) => {
 		`
 	} 
 	
-	// if block has no thumbnail image
+	// If block has no thumbnail available, show a placeholder UI card with the block title + type
 	else {
 		let blockTitle = ''
 
@@ -307,6 +343,8 @@ let renderBlock = (blockData) => {
 		`
 	}
 	
+	// use data-block-id to open modal
+	// data-kind is used for filtering toggles
 	thumbItem = 
 	`
 	<li class="content" data-block-id="${ blockData.id }" data-kind="${ kind }"> 
@@ -319,16 +357,21 @@ let renderBlock = (blockData) => {
 
 }
 
-// creating filtering / toggles for the navigation menu
-// function for applying the actual filters
+
+// Attribution to LLM (ChatGPT): It suggested using aria-pressed property + [hidden] for a toggles in the nav.
+// My understanding: applyFilters reads the toggle states true/false and hides/shows blocks based on the block's data-kind.
 let applyFilters = () => {
 	// what kinds of data are currently on
+	// maps like { IMG: true, MP3: false, ... }
 	let actives = {}
 
+	
 	let toggle = document.querySelectorAll('.filter-toggle')
 
 	toggle.forEach((button) => {
+		// what category this toggle controls
 		let kind = button.getAttribute('data-kind')
+		// this is the current state
 		let on = button.getAttribute('aria-pressed') == 'true'
 		actives[kind] = on
 	})
@@ -338,13 +381,16 @@ let applyFilters = () => {
 	blockContent.forEach((item) => {
 		let kind = item.getAttribute('data-kind')
 		let show = actives[kind]
-		item.hidden = !show
+		// [hidden] is a native HTML way to hide elements
+		item.hidden = !show 
 	})
 
 
 }
 
 // setting up the actual filters for each respective block
+// Attribution to LLM (ChatGPT): It suggested attaching click handlers once and calling applyFilters after the actual toggles change.
+// My understanding: setFilters() manipulates the aria-pressed property through button clicks, then re-filters blocks accordingly
 let setFilters = () => {
 	let toggle = document.querySelectorAll('.filter-toggle')
 
@@ -356,12 +402,16 @@ let setFilters = () => {
 			applyFilters()
 		})
 	})
+
+	// run the helper function once
 	applyFilters()
 }
 
 
-// A function to display the owner/collaborator info:
 
+
+
+// A function to display the owner/collaborator info:
 // inside address tag -> <img src="${ userData.avatar }">
 let renderUser = (userData) => {
 	let channelUsers = document.querySelector('#channel-users') // Container.
@@ -429,12 +479,15 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 
 	setFilters()
 
+	// Attribution to LLM (ChatGPT): It suggested click event on #channel-blocks for dynamic <li> items which are the Are.na content blocks themselves.
+	// My understanding: clicking on any thumbnail finds its nearest li[data-block-id], then opens that block in the modal.
 	let channelBlocks = document.querySelector('#channel-blocks')
 
 	// to open the blocks with click
 	channelBlocks.addEventListener('click', (event) => {
 
-		// to find the clicked <li> element with the data block id
+		// to find the clicked <li> element with the data block id, even if you click the img inside
+	if (!clicked) return
 		let clicked = event.target.closest('li[data-block-id]')
 		if (!clicked) return
 
@@ -445,8 +498,8 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		let blockData = blocksById[blockId]
 		if (!blockData) return
 
-		// want to actually build the modal and open it
-		// use buildModal function implemented earlier
+		// want to actually build the html content in modal and open it
+		// use buildModal helper function implemented earlier
 		let modalHtml = buildModal(blockData)
 		openModal(modalHtml)
 	})
