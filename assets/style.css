@@ -40,7 +40,7 @@
     --gray1: #0A0520;
     --gray2: #242630;
     --gray3: #20373F;
-    --gray4: #3f4f54;
+    --gray4: #5c676a;
     --radial1: radial-gradient( var(--gray3), var(--gray2), var(--gray1));
 
 
@@ -71,6 +71,36 @@ body{
     overflow-x: hidden;
     overflow-y: visible;
 
+}
+/* want to add a scanpulse glitchy animation */
+body::after{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1111;
+    background: repeating-linear-gradient(
+        to bottom,
+        /* first stripe is invisible */
+        transparent, transparent 2px,
+        rgba(0, 212, 172, 0.04) 2px,
+        rgba(0, 212, 172, 0.04) 4px
+    );
+
+    animation: pulse 4s ease-in-out infinite;
+
+
+}
+
+@keyframes pulse {
+    /* from start to end */
+    0%,100%{
+        opacity: 80%;
+    }
+    /* at halfway */
+    50%{
+        opacity:50%;
+    }
 }
 
 /*
