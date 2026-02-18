@@ -478,7 +478,17 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		renderBlock(blockData) // Pass the single block’s data to the render function.
 	})
 
+	// implementation with guidance from Claude
+	// setFilters() applies filtering logic to the displayed blocks and updates the navigation UI with the current total count.
+
 	setFilters()
+
+	// The nav element is selected from the DOM. If it exists, a custom data attribute (data-count) is set to the total number of items returned from the Are.na API (json.data.length). 
+	// This allows the count to be accessed in CSS (via attr()) or JavaScript for display, filtering, or interface feedback.
+	let nav = document.querySelector('nav')
+
+	// This pattern separates data from presentation by storing state in a semantic data attribute rather than hardcoding values.
+	if (nav) nav.setAttribute('data-count', json.data.length)
 
 	// Attribution to LLM (ChatGPT): It suggested click event on #channel-blocks for dynamic <li> items which are the Are.na content blocks themselves.
 	// My understanding: clicking on any thumbnail finds its nearest li[data-block-id], then opens that block in the modal.
