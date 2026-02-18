@@ -239,7 +239,8 @@ nav{
 
 }
 /* blinking dot */
-nav::before {
+nav::before,
+nav::after {
     content: '■';
     position: absolute;
     left: 1rem;
@@ -251,7 +252,7 @@ nav::before {
 }
 
 /* block count */
-nav::after {
+/* nav::after {
     content: 'BLOCKS: ' attr(data-count);
     position: absolute;
     right: 1rem;
@@ -262,7 +263,7 @@ nav::after {
     color: var(--green1);
     letter-spacing: .12em;
     opacity: 0.7;
-}
+} */
 
 @keyframes blink{
     0%, 100%{
@@ -289,7 +290,7 @@ nav ul li{
 }
 nav ul li:hover{
     color:var(--white);
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 button.filter-toggle{
     background: transparent;
@@ -309,8 +310,8 @@ button.filter-toggle:hover{
     transform: translateY(-1px);
 }
 button.filter-toggle:focus{
-    outline: 1px solid var(--linear1);
-    outline-offset: 2px;
+    /* outline: 1px solid var(--linear1);
+    outline-offset: 2px; */
 
     h4.filter-label{
     color: var(--green1);
@@ -567,7 +568,7 @@ h3.link-title{
     }
 }
 h4.filter-label{
-    color: var(--green1);
+    color: var(--gray4);
     font-weight:400;
     font-size:1.2rem;
     text-align:center;
