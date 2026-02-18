@@ -484,18 +484,20 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	let channelBlocks = document.querySelector('#channel-blocks')
 
 	// to open the blocks with click
+	// to find the clicked <li> element with the data block id, even if you click the img inside
+
 	channelBlocks.addEventListener('click', (event) => {
 
-		// to find the clicked <li> element with the data block id, even if you click the img inside
-	if (!clicked) return
+
+	
 		let clicked = event.target.closest('li[data-block-id]')
 		if (!clicked) return
 
-		// to get the id string from the attribute
-		let blockId = clicked.getAttribute('data-block-id')
+		let blockId = clicked.getAttribute('data-block-id') 		// to get the id string from the attribute
 
-		// look up + search for the saved block data
-		let blockData = blocksById[blockId]
+
+		let blockData = blocksById[blockId] 		// look up + search for the saved block data
+
 		if (!blockData) return
 
 		// want to actually build the html content in modal and open it

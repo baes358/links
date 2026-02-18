@@ -48,24 +48,144 @@
     --teal: #00D4F5;
     --linear2:linear-gradient(to bottom, var(--purp), var(--teal));
 
+    --radial1: radial-gradient( var(--gray3), var(--gray2), var(--gray1));
+
+    --star-small: 2px;
+    --star-medium: 4px;
+    --star-large: 6px;
+
 }   
 
 html{
-    background:var(--gray2);
+    background:var(--radial1);
+
     cursor:url('../media/crosshair.png'),auto;
 }
 body{
-    /* background:var(--green); */
     height:100%;
     overflow-x: hidden;
     overflow-y: visible;
+
+}
+
+/*
+Starfield background (Parallax Star Background) adapted from:
+https://codepen.io/sarazond/pen/LYGbwj
+
+Original implementation is by Saransh Sinha (sarazond on CodePen) uses Sass functions and box-shadow to generate randomly positioned stars and animate them vertically to simulate parallax motion. 
+
+This version has been rewritten in pure CSS using layered radial-gradients instead of Sass-generated
+box-shadows. 
+Each radial-gradient is meant to represent a single star rendered as a small circular gradient with a solid center and transparent edges. Star sizes are determined using CSS root variables
+to create size variations.
+The percentage coordinates are used to position stars relative to the actual viewport.
+
+The animation takes use of vertical transforms to showcase the movement of stars through space.
+*/
+
+.starsbg{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:200vh;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+    background-image:
+        /* radial-gradient creates circles that fade out towards edges */ 
+        /* ()px ()px is the size of the star */
+        /* at ()% ()% is position of the star */
+        /* white, transparent is color of star to faded out edges */
+
+        radial-gradient(
+            var(--star-medium) var(--star-medium) 
+            at 15% 25%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-large) var(--star-large) 
+            at 10% 20%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-medium) var(--star-medium)
+            at 30% 80%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-small) var(--star-small)
+            at 35% 95%,
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-small) var(--star-small)
+            at 50% 40%,
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-medium) var(--star-medium) 
+            at 55% 55%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-large) var(--star-large)
+            at 70% 10%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-small) var(--star-small)
+            at 75% 35%,
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-medium) var(--star-medium)
+            at 90% 60%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-small) var(--star-small)
+            at 20% 50%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-small) var(--star-small)
+            at 25% 45%,
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-medium) var(--star-medium) 
+            at 80% 90%, 
+            white, transparent
+            ),
+        radial-gradient(
+            var(--star-small) var(--star-small) 
+            at 85% 95%, 
+            white, transparent
+            );
+        
+    /* to continuously run, animation set on infinite */
+    animation: starSpace 10s linear infinite;
+
+}
+
+@keyframes starSpace {
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(-50%);
+    }
 }
 
 
 nav{
     position:sticky;
-    top:3rem;
+    top:1rem;
     z-index:50;
+    /* background:var(--gray2); */
 }
 nav ul{
     list-style:none;
