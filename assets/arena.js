@@ -221,7 +221,8 @@ let buildModal = (blockData) => {
 			mediaHtml = 
 			`
 			<section class="audio-wrap">
-				<audio controls src="${ blockData.attachment.url}"></audio>
+				<audio controls src="${ blockData.attachment.url}" playsinline>
+				</audio>
 			</section>
 			`
 		}

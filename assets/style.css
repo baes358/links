@@ -36,19 +36,24 @@
 
     --white: #edecef;
     --black: #000;
-    --green: #00ad62;
+
     --gray1: #0A0520;
     --gray2: #242630;
     --gray3: #20373F;
+    --gray4: #3f4f54;
+    --radial1: radial-gradient( var(--gray3), var(--gray2), var(--gray1));
+
+
     --green1: #00D4AC;
     --yellow: #E8FD5F;
     --linear1: linear-gradient(to bottom, var(--green1), var(--yellow));
+
     --darkpurp: #24174D;
     --purp: #8E70FA;
     --teal: #00D4F5;
     --linear2:linear-gradient(to bottom, var(--purp), var(--teal));
 
-    --radial1: radial-gradient( var(--gray3), var(--gray2), var(--gray1));
+    
 
     --star-small: 2px;
     --star-medium: 4px;
@@ -183,9 +188,12 @@ The animation takes use of vertical transforms to showcase the movement of stars
 
 nav{
     position:sticky;
-    top:1rem;
+    top:0rem;
+    padding-block:1rem;
     z-index:50;
-    /* background:var(--gray2); */
+    
+    background:var(--gray1), .5;
+    backdrop-filter:blur(10px);
 }
 nav ul{
     list-style:none;
@@ -194,8 +202,9 @@ nav ul{
     justify-content:space-evenly
 }
 nav ul li{
-    font-family:"Reddit";
+    font-family:"Zen";
     color:var(--white);
+    font-size:.7rem;
     font-weight:300;
 }
 nav ul li:hover{
@@ -205,14 +214,28 @@ nav ul li:hover{
 button.filter-toggle{
     /* background: var(--gray1); */
     
+    width:fit-content;
     letter-spacing: 0.08em;
     padding:.5rem;
     cursor:url('../media/cursor.png'),auto;
     
+    
 }
 button.filter-toggle:focus{
-    outline: 1px solid var(--white);
+    outline: 1px solid var(--linear1);
     outline-offset: 2px;
+
+    h4.filter-label{
+    color: var(--green1);
+    }
+}
+
+section.filter-switch{
+    border: 1.5px solid var(--yellow);
+    display:flex;
+    flex-direction: row;
+    border-radius:7px;
+
 }
 
 /* base state of toggles */
@@ -221,7 +244,8 @@ section.filter-switch .off{
     background: transparent;
     color:var(--white);
     /* opacity: 0.7; */
-    padding: 0.15rem 0.45rem;
+    padding:.25rem .5rem;
+
 }
 
 
@@ -230,6 +254,7 @@ button.filter-toggle[aria-pressed="true"] .filter-switch .on{
     background: var(--linear1);
     color: black;
     opacity: 1;
+    border-radius:5px 0 0 5px;
 }
 /* OFF state highlight */
 button.filter-toggle[aria-pressed="false"] .filter-switch .off{
@@ -237,63 +262,28 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     background: var(--linear1);
     color: black;
     opacity: 1;
-}
-
-section.filter-switch{
-    border: 1px solid var(--white);
-
-}
-
-span.filter-label {
-    margin-block-end:1rem;
+    border-radius:0 5px 5px 0;
 }
 
 
-/* background img container */
-/* .bg{
-    background:var(--green);
-    position:fixed;
-    width:100vw;
-    height: 100vh;
-    inset:0;
-    overflow:hidden;
-    z-index:-1;
-} */
 
-/* background dark overlay */
-/* .bg::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background: rgba(0, 0, 0, .5);
-    background-blend-mode: normal;
-    z-index:2;
-    pointer-events:none;
-} */
 
-/* bg img itself */
-/* .bg img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position: center;
-    z-index:1;
-    
-} */
+
+
 
 hgroup{
     padding-inline:2rem;
     padding-block:5rem;
     position:relative;
-    /* background:var(--black); */
+    margin-inline:auto;
+    
     z-index:5;
      
 }
 .hdesc{
     border-radius: 12px;
-
+    margin-inline:auto;
+    width:75vw;
     border: 4px solid transparent;
 
     background:
@@ -306,6 +296,13 @@ hgroup{
     padding-block:1rem 3rem;
     text-align: center;
     align-items: center;
+
+    @media (780px <= width <= 1280px){
+        width: 50vw;
+    }
+    @media (width > 1280px){
+        width: 60vw;
+    }
 }
 
 
@@ -317,15 +314,20 @@ h1{
     font-size: 3rem;
     letter-spacing:.02em;
     line-height:3rem;
-    margin-block-end:1.5rem;
+    margin-block:.5rem 3rem;
+    margin-inline:3rem;
 
 
 
     @media (780px <= width <= 1280px){
-        font-size: 3.5rem;
+        font-size: 4rem;
+        line-height:3.75rem;
+        margin-inline:4rem;
     }
     @media (width > 1280px){
-        font-size: 4rem;
+        font-size: 5rem;
+        line-height:4.5rem;
+        margin-inline:5rem;
     }
 
     
@@ -353,9 +355,7 @@ h2{
     }
 
 }
-.content h3{
-    
-}
+
 h3.link-title{
     font-size:.7rem;
 
@@ -370,13 +370,15 @@ h3.link-title{
     }
 }
 h4.filter-label{
-    color: var(--green1);
+    color: var(--gray4);
     font-weight:500;
+    font-size:1.2rem;
     text-align:center;
     text-transform: uppercase;
-    margin-block-end:1rem;
+    margin-block-end:.3rem;
 
 }
+
 hgroup p{
     font-family:'Reddit';
     text-align:center;
@@ -465,18 +467,7 @@ main .content{
     cursor:url('../media/cursor.png'),auto;
 
 }
-/* video content how-to? */
-/* main video{
-    display:block;
-    margin-inline:auto;
-    width:70%;
-    z-index:5;
-    margin-block:3rem;
-    padding:1rem;
-    background:rgba(0,0,0,0.25);
-    border:solid var(--black) 2px;
-    border-radius: 5px;
-} */
+
 main img{
     display:block;
     margin-inline:auto;
@@ -529,6 +520,9 @@ iframe{
 }
 #block-modal{
     position:fixed;
+    height:fit-content;
+    width:70vw;
+    z-index:7;
 }
 .modal::backdrop{
     
@@ -540,9 +534,7 @@ iframe{
 
     padding-inline:1rem;
 }
-/* body.modal-open{
-  overflow: hidden;
-} */
+
 #modal-close{
     /* padding-block:1rem; */
     position: absolute;
@@ -597,6 +589,9 @@ iframe{
     cursor:url('../media/cursor.png'),auto;
 
 }
+.modal-body{
+    margin:2rem 1rem;
+}
 .modal-kind p{
     font-family:'Zen';
     background-image: linear-gradient(to bottom, var(--green1), var(--yellow));
@@ -612,7 +607,6 @@ iframe{
 
 }
 
-
 .modal img,
 .modal video {
   display: block;
@@ -624,20 +618,23 @@ iframe{
     width: 80%;
     margin: 1rem auto 0;
     padding: 0.75rem;
-
     border: 1px solid var(--white);
-    background: rgba(255,255,255,0.06);
+    /* background: rgba(255,255,255,0.06); */
+    z-index:6;
 
 }
 .modal .audio-wrap audio{
-  display: block;
-  width: 80%;
-  margin: 1rem auto 0;
-
-  filter: none;     /* important */
-  opacity: 1;
-  background: transparent;
+    all:revert;
+    display: block;
+    width: 100%;
+    margin: 1rem auto ;
+    opacity: 1;
+    z-index:7;
+    pointer-events:auto;
+    -webkit-appearance: auto;
+    appearance: auto;
 }
+
 
 
 .modal::-webkit-scrollbar {
@@ -661,17 +658,7 @@ iframe{
 
 
 
-.content audio{
-    display:block;
-    width:100%;
-    height: 40px;
-    margin: 1rem auto;
-    padding: 0.5rem;
-    background: rgba(255,255,255,0.15);
-    border-radius: 6px;
-    filter: invert(1);
-    color-scheme: light;
-}
+
 
 main .txt{
     font-family:'Reddit';
@@ -710,7 +697,8 @@ i.fa-link{
 
 .thumb-placeholder{
     width: 100%;
-    aspect-ratio: 1 / 1;       /* keep tiles square */
+    /* keep tiles square */
+    aspect-ratio: 1 / 1;       
     display: flex;
     align-items: center;
     justify-content: center;
