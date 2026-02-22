@@ -3,27 +3,17 @@
     font-family: 'Reddit';
     src: url('../fonts/RedditMono-VariableFont_wght.ttf') format('truetype');
 }
-@font-face {
-    font-family: 'Jacquard';
-    src: url('../fonts/Jacquard24-Regular.ttf') format('truetype');
-    font-weight: 400; /* or normal */
-    font-style: normal;
-}
+
 @font-face {
     font-family: 'Zen';
     src: url('../fonts/ZenDots-Regular.ttf') format('truetype');
     font-weight: 400; /* or normal */
     font-style: normal;
 }
+
 @font-face {
-    font-family: 'Aldrich';
-    src: url('../fonts/Aldrich-Regular.ttf') format('truetype');
-    font-weight: 400; /* or normal */
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Audio';
-    src: url('../fonts/Audiowide-Regular.ttf') format('truetype');
+    font-family: 'Orbitron';
+    src: url('../fonts/Orbitron-VariableFont_wght.ttf') format('truetype');
     font-weight: 400; /* or normal */
     font-style: normal;
 }
