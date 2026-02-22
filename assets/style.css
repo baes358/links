@@ -54,6 +54,13 @@
     --star-medium: 4px;
     --star-large: 6px;
 
+
+    --panel-bg:#080e0c;
+    --panel-cell:#0c1411;
+    --panel-bdr:#0c1411;
+    --panel-bdr2:#264038;
+    --panel-head:#0f1c17;
+
 }   
 
 html{
@@ -63,9 +70,8 @@ html{
 }
 body{
     height:100%;
-    overflow-x: hidden;
-    overflow-y: visible;
-
+    overflow: hidden;
+    color:var(--white);
 }
 /* want to add a scanpulse glitchy animation */
 body::after{
