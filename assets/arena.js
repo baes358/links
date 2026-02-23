@@ -234,6 +234,114 @@ let renderBlock = (blockData) => {
 
 
 
+// Attribution to LLM (Claude AI): It suggested a structure for a block's details on the right panel, as I wanted to recreate an inventory screen like from the video game RAGE
+// My understanding: showDetail() fills in the right hand panel with a block's details once a user clicks on one
+
+let showDetail = (block, index) => {
+	let kind = getKind(block)
+
+	let dateAdded = '-'
+	if (block.created_at){
+		dateAdded = new Date(block.created_at).toLocaleDateString('en-US', {
+			year: 'numeric',
+			month:'short',
+			day:'numeric'
+		})
+	}
+
+
+	let descHtml = ''
+
+	if (block.description && block.description.html){
+		descHtml = block.description.html
+	} else if (block.content && block.content.html) {
+		descHtml = block.content.html
+	}
+
+
+	// right panel switches when user clicks on block
+	document.querySelector('#state-info').classList.add('gone')
+	document.querySelector('#state-detail').classList.add('show')
+
+
+	// for the blocks labels and titles
+	let label = KIND_LABEL[kind] || kind
+	document.querySelector('#detail-header-label').textContent = label
+	document.querySelector('#sd-cat').textContent = label
+	document.querySelector('#sd-name').textContent = block.title || block.type
+
+
+
+
+	// for the blocks description
+	let sdDesc = document.querySelector('#sd-desc')
+	if (block.source && block.source.url) {
+		sdDesc.innerHtml = 
+		`
+		<a class="sd-link" href="${block.source.url}" target="_blank" rel="noopener">
+			<i class="fa-solid fa-link"></i>
+			<span>${block.source.url}</span>
+		</a>
+		${descHtml}
+		`
+	} else {
+		sdDesc.innerHtml = descHtml
+	}
+
+
+
+
+	let previewHtml = ''
+	const imageUrl = getImageUrl(block)
+
+	if (imageUrl) {
+		previewHtml =
+		`
+		<img src="${imageUrl}" alt="${block.title || ''}" class="sd-preview-img">
+		`
+
+
+
+	} else if (block.type === 'Attachment' && block.attachment){
+		let contentType = block.attachment.content_type || ''
+
+		if (contentType.includes('video')){
+			previewHtml = 
+			`
+			<video controls src="${block.attachment.url}" style="width:100%; display:block;"></video>
+			`
+		} else if (contentType.includes('audio')){
+			previewHtml = 
+			`
+			<audio controls src="${block.attachment.url}" style="width:100%;"></audio>
+			`
+		}
+
+	
+	} else if (block.type === 'Embed' && block.embed && block.embed.html){
+		let isBehance = false
+
+		if (block.source && block.source.url && block.source.url.includes('behance.net')){
+			isBehance = true
+		}
+
+		if (!isBehance){
+			previewHtml =
+			`
+			<section class="sd-embed-wrap">
+				${block.embed.html}
+			</section>
+			`
+		}
+	}
+
+}
+
+
+
+
+
+
 
 
 
