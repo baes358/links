@@ -433,7 +433,7 @@ let setFilters = () => {
 
 	toggle.forEach((button) => {
 		button.addEventListener('click', () => {
-			let current = button.getAttribute('aria-pressed') == 'true'
+			let current = button.getAttribute('aria-pressed') === 'true'
 			button.setAttribute('aria-pressed', current ? 'false' : 'true')
 
 			applyFilters()
@@ -518,16 +518,30 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		let clicked = event.target.closest('li[data-block-id]')
 		if (!clicked) return
 
-		let blockId = clicked.getAttribute('data-block-id') 		// to get the id string from the attribute
-
-
-		let blockData = blocksById[blockId] 		// look up + search for the saved block data
-
+		// look up + search for the saved block data
+		let blockData = blocksById[clicked.getAttribute('data-block-id')]
 		if (!blockData) return
 
-		// want to actually build the html content in modal and open it
-		// use buildModal helper function implemented earlier
-		let modalHtml = buildModal(blockData)
-		openModal(modalHtml)
+
+		// highlight the clicked block, and remove highlight from the previous
+		document.querySelectorAll('.content.selected').forEach(block => block.classList.remove('selected'))
+		clicked.classList.add('selected')
+
+		// to store as selected for the action buttons to reference on user's end
+		selectedBlock = { 
+			blockData, 
+			el: clicked 
+		}
+
+		// finds the position of this block in the existing inventory grid
+		let allBlocks = Array.from(channelBlocks.querySelectorAll('li[data-block-id'))
+		let index = allBlocks.indexOf(clicked)
+
+
+		// need to update the scanned counter
+		scanned++
+		updateScanned()
+
+		showDetail(blockData, index)
 	})
 })
