@@ -173,7 +173,7 @@ let updateScanned = () => {
 // setTimeout() creates a new timer and has duration of 2200 or 2.2 seconds, also removing the class name that was previously added
 
 let showToast = (msg) => {
-	let toast = document.querySelector('toast')
+	let toast = document.querySelector('#toast')
 
 	toast.textContent = msg
 	toast.classList.add('show')
@@ -204,8 +204,11 @@ let renderBlock = (blockData) => {
 	
 
 	// block has thumbnail image
-	if (imageURL){ 
-		thumbnail = `<img src="${imageUrl}" alt=""`
+	if (imageUrl){ 
+		thumbnail = 
+		`
+		<img src="${imageUrl}" alt="">
+		`
 	} else {
 		thumbnail = 
 		`
