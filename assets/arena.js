@@ -192,50 +192,37 @@ let showToast = (msg) => {
 let renderBlock = (blockData) => {
 	// To start, a shared ul where we’ll insert all our blocks 
 	let channelBlocks = document.querySelector('#channel-blocks') 
+	let kind = getKind(blockData)
 	// store blocks by their id so modal can look it up later
 	blocksById[blockData.id] = blockData 
 	// want to only show thumbnail media initially 
 	
+
+	let imageUrl = getImageUrl(blockData)
 	let thumbnail = '' 
-	let thumbMedia = ''
-	let kind = getKind(blockData)
+	let thumbItem = '' 
 	
 
 	// block has thumbnail image
-	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){ 
-		thumbnail = blockData.image.large.src_2x 
-
-		thumbMedia =
+	if (imageURL){ 
+		thumbnail = `<img src="${imageUrl}" alt=""`
+	} else {
+		thumbnail = 
 		`
-		<img src="${ thumbnail }" >
-		`
-	} 
-	
-	// If block has no thumbnail available, show a placeholder UI card with the block title + type
-	else {
-		let blockTitle = ''
-
-		if (blockData.title){
-			blockTitle = blockData.title
-		}
-		else {
-			blockTitle = blockData.type
-		}
-
-		thumbMedia =
-		`
-		<section class="thumb-placeholder">
-    		<p>${ blockTitle }</p>
-  		</section>
+			<section class="thumb-placeholder">
+				<p>${blockData.title || blockData.type}</p>
+			</section>
 		`
 	}
+	
+	
 	
 	// use data-block-id to open modal
 	// data-kind is used for filtering toggles
 	thumbItem = 
 	`
 	<li class="content" data-block-id="${ blockData.id }" data-kind="${ kind }"> 
-		${ thumbMedia }
+		${ thumbnail }
 	</li> 
 	`
 	// And puts it into the page! 
