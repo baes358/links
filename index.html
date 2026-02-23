@@ -60,17 +60,16 @@
                 </section>
             </section>
 
-
             <section class="hero-line bottom"></section>
-
         </section>
 
 
 
+        <!-- background behind inventory -->
         <section class="starsbg"></section>
 
 
-        <hgroup>
+        <!-- <hgroup>
             <h1 id="channel-title" data-text=""></h1>
             <section class="hdesc">
                 <h2 >A
@@ -80,7 +79,41 @@
             </section>
             
         </hgroup>
-       
+        -->
+
+        <!-- page shell that centers the inventory panels and replaces hgroup -->
+        
+        <section id="shell">
+            <section id="panel-container">
+
+                <!-- top bar for panel view -->
+                <section id="hud-bar">
+                    <span class="hud-blink">&#9632;</span>
+                    <span class="hud-title" id="hud-title-display">
+                        VIDEO GAME INTERFACES
+                    </span>
+                    <span class="hud-pipe">|</span>
+                    <span class="hud-stat">
+                        SCANNED: 
+                        <b id="h-scan">000</b>
+                    </span>
+
+                    <!-- spacer -->
+                    <section class="hud-gap"></section>
+
+                    <span class="hud-total">
+                        TOTAL: 
+                        <b id="channel-count">-</b>
+                    </span>
+
+                </section>
+
+
+
+
+
+            </section>
+        </section>
 
 
         <nav class="filters">
