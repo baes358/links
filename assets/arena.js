@@ -335,6 +335,41 @@ let showDetail = (block, index) => {
 		}
 	}
 
+
+	let previewSect = previewHtml
+	if (previewHtml){
+		previewSect =
+		`
+		<section class="sd-preview">${previewHtml}</section>
+		`
+	}else {
+		previewSect = ''
+	}
+
+	document.querySelector('#sd-stats').innerHTML =
+
+		`
+		${previewSect}
+		<section class="sd-stat-row">
+			<span class="sd-stat-k">TYPE</span>
+			<span class="sd-stat-v">${kind}</span>
+		</section>
+		<section class="sd-stat-row">
+			<span class="sd-stat-k">ADDED</span>
+			<span class="sd-stat-v">${dateAdded}</span>
+		</section>
+		<section class="sd-stat-row">
+			<span class="sd-stat-k">INDEX</span>
+
+			<span class="sd-stat-v">#${String(index + 1).padStart(3, '0')}</span>
+		</section>
+		`
+		// padStart formats number as fixed three-digit string by adding leading zeros when required, keeping the visual width of values consistent
+
+	// scrollTop resets element's vertical scroll position to the top of container
+	document.querySelector('#detail-scroll').scrollTop = 0
+
+
 }
 
 
