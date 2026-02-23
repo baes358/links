@@ -1479,6 +1479,42 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 
 
 
+/* styling for toast notifications (temporary mini notifs) */
+#toast{
+    position:fixed;
+    bottom:2.25rem;
+    left:50%;
+    transform: translateX(-50%) translateY(12px);
+    font-family:'Orbitron';
+    font-size:.48rem;
+    letter-spacing:.14em;
+    background:rgba(8,14,12,.95);
+    border:1px solid var(--green1);
+    color:var(--green1);
+    padding:.45rem 1.1rem;
+    box-shadow:0 0 14px rgba(0,212,172,.3);
+    opacity:0;
+    transition: opacity .2s,
+                transform .2s;
+    z-index:9998;
+    pointer-events:none;
+}
+
+/* js adds class show */
+#toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
