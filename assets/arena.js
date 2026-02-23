@@ -510,6 +510,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	// Attribution to LLM (ChatGPT): It suggested click event on #channel-blocks for dynamic <li> items which are the Are.na content blocks themselves.
 	// My understanding: clicking on any thumbnail finds its nearest li[data-block-id], then opens that block in the modal.
 	let channelBlocks = document.querySelector('#channel-blocks')
+	let scannedBlocks = new Set()
 
 	// to open the blocks with click
 	// to find the clicked <li> element with the data block id, even if you click the img inside
@@ -537,13 +538,19 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		}
 
 		// finds the position of this block in the existing inventory grid
-		let allBlocks = Array.from(channelBlocks.querySelectorAll('li[data-block-id'))
+		let allBlocks = Array.from(channelBlocks.querySelectorAll('li[data-block-id]'))
 		let index = allBlocks.indexOf(clicked)
 
 
 		// need to update the scanned counter
-		scanned++
-		updateScanned()
+		let blockId = blockData.id
+
+		if (!scannedBlocks.has(blockId)){
+			scannedBlocks.add(blockId)
+			scanned++
+			updateScanned()
+		}
+		
 
 		showDetail(blockData, index)
 	})
