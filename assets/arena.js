@@ -13,6 +13,8 @@ const KIND_LABEL = {
 	MP4:'VIDEO'
 }
 
+let blocksById = {}
+
 
 // Attribution to LLM (ChatGPT): I was trying to figure out a sorting/categorization method to help structure this as a mapping function for the different media types.
 
@@ -149,6 +151,33 @@ let renderUser = (userData) => {
 
 
 
+// create a function that updates how many blocks the user has "scanned", or viewed, so far
+let updateScanned = () => {
+	let display = scanned.toString().padStart(3, '0')
+
+	document.querySelector('#h-scan').textContent = display
+	document.querySelector('#si-scanned').textContent = display
+
+}
+
+
+
+
+// create a function to show a toast message -> small mini notification that shows temporarily
+// Attribution to LLM (ChatGPT): It suggested using a toast message like how some video games use, specifically helping me with the timeout.
+// My understanding: 
+// clearTimeout() helps to cancel any previously schedules animation. 
+// setTimeout() creates a new timer and has duration of 2200 or 2.2 seconds, also removing the class name that was previously added
+
+let showToast = (msg) => {
+	let toast = document.querySelector('toast')
+
+	toast.textContent = msg
+	toast.classList.add('show')
+
+	clearTimeout(toast._timer)
+	toast._timer = setTimeout(() => toast.classList.remove('show'), 2200)
+}
 
 
 
@@ -156,7 +185,6 @@ let renderUser = (userData) => {
 
 
 
-let blocksById = {}
 
 // retrieve elements from html
 let modal = document.querySelector('#block-modal')
