@@ -871,63 +871,28 @@ The animation takes use of vertical transforms to showcase the movement of stars
 
 
 
-nav{
-    position:sticky;
-    top:0;
-    padding-block:.75rem;
-    z-index:50;
-    backdrop-filter:blur(10px);
-    background: var(--darkpurp2);
-    border-bottom: 1px solid #00d4ac33;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.8);
-
-}
-/* blinking dot */
-nav::before,
-nav::after {
-    content: '■';
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: .5rem;
-    color: var(--green1);
-    animation: blink 1.2s step-end infinite;
+nav.filters{
+    position:static;
+    backdrop-filter:none;
+    background:var(--black);border-bottom:.0625 solid var(--panel-bdr);
+    box-shadow:none;
+    padding: .25rem .375rem;
 }
 
-/* block count */
-/* nav::after {
-    content: 'BLOCKS: ' attr(data-count);
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Zen';
-    font-size: .55rem;
-    color: var(--green1);
-    letter-spacing: .12em;
-    opacity: 0.7;
-} */
-
-
-
-
-nav ul{
+nav.filters ul.filter-list{
     list-style:none;
     display:flex;
     flex-direction:row;
-    justify-content:space-evenly
+    justify-content: space-evenly;
+    gap:.125rem;
 }
-nav ul li{
-    font-family:"Zen";
-    color:var(--white);
-    font-size:.7rem;
-    font-weight:300;
+
+nav.filters ul li{
+    font-size:inherit;
 }
-nav ul li:hover{
-    color:var(--white);
-    /* text-decoration: underline; */
-}
+
+
+
 button.filter-toggle{
     background: transparent;
     border:none;
