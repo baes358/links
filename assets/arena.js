@@ -14,6 +14,9 @@ const KIND_LABEL = {
 }
 
 let blocksById = {}
+// variable for how many blocks user has clicked on
+let scanned = 0
+let selectedBlock = null
 
 
 // Attribution to LLM (ChatGPT): I was trying to figure out a sorting/categorization method to help structure this as a mapping function for the different media types.
