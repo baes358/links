@@ -90,7 +90,7 @@ let getSourceUrl = (blockData) => {
 	if (blockData.source && blockData.source.url){
 		return blockData.source.url
 	}
-	if (blockData.attachment & blockData.attachment.url){
+	if (blockData.attachment && blockData.attachment.url){
 		return blockData.attachment.url
 	}
 	return `https://www.are.na/block/${blockData.id}`

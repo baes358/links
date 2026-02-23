@@ -1015,64 +1015,45 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 
 /* for actual inventory blocks */
 #channel-blocks{
-    /* flex:1;*/
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0, 1fr));
-    align-items:start;
-    gap:.125rem;
-    padding:.125rem;
-    overflow-y:auto;
-    list-style:none;
-    
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .125rem;
+  padding: .125rem;
+  list-style: none;
 
-
-   
-}
-@media (360px <= width <= 780px) {
-
-    #channel-blocks{
-        grid-template-columns:repeat(3,minmax(0, 1fr));
-
-    }
+  /* good defaults */
+  align-content: start;
 }
 
-@media (780px <= width <= 1280px) {
-    #channel-blocks{
-            flex: 1;
-            /* min-height: 0; */
-            /* grid scrolls inside the panel */
-            overflow-y: auto;  
-            align-content: start;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
+/* small screens */
+@media (360px <= width <= 780px){
+  #channel-blocks{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-@media (width > 1280px) {
-    #channel-blocks{
-            flex: 1;
-            /* min-height: 0; */
-            overflow-y: auto; 
-            align-content: start;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
+/* medium */
+@media (780px <= width <= 1280px){
+  #channel-blocks{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
- 
 
+/* large */
+@media (width > 1280px){
+  #channel-blocks{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
 
+/* each tile */
 .content{
-    display:block;
-    width:100%;
-    aspect-ratio:1/1;
-    position:relative;
-    overflow:hidden;
-    background:var(--panel-cell);
-    border:1px solid var(--panel-bdr);
-    cursor: url('../media/cursor.png'), pointer;
-    transition:border-color .1s,
-                background .1s;
-    
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
 }
-
 /* offset animation so it moves randomly */
 /* .content:nth-child(2n){
     animation-delay:-2s;
