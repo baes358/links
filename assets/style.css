@@ -1016,15 +1016,14 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 /* for actual inventory blocks */
 #channel-blocks{
     /* flex:1;*/
-    min-height:1;
     display:grid;
     grid-template-columns:repeat(3,minmax(0, 1fr));
-    grid-template-rows: 1fr;
+    align-items:start;
     gap:.125rem;
     padding:.125rem;
     overflow-y:auto;
     list-style:none;
-    /* align-content:start; */
+    
 
 
    
@@ -1040,7 +1039,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 @media (780px <= width <= 1280px) {
     #channel-blocks{
             flex: 1;
-            min-height: 0;
+            /* min-height: 0; */
             /* grid scrolls inside the panel */
             overflow-y: auto;  
             align-content: start;
@@ -1051,7 +1050,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 @media (width > 1280px) {
     #channel-blocks{
             flex: 1;
-            min-height: 0;
+            /* min-height: 0; */
             overflow-y: auto; 
             align-content: start;
             grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1065,7 +1064,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     width:100%;
     aspect-ratio:1/1;
     position:relative;
-    overflow-x:hidden;
+    overflow:hidden;
     background:var(--panel-cell);
     border:1px solid var(--panel-bdr);
     cursor: url('../media/cursor.png'), pointer;
