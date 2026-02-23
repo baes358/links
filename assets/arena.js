@@ -4,75 +4,14 @@ console.log('arena.js loaded ✅')
 let channelSlug = 'video-game-interfaces-x9glzuoklq' // The “slug” is just the end of the URL.
 let myUsername = 'sophia-bae-zsvqiaw7cdm' // For linking to your profile.
 
-
-// First, let’s lay out some *functions*, starting with our basic metadata:
-let placeChannelInfo = (channelData) => {
-	// Target some elements in your HTML:
-	let channelTitle = document.querySelector('#channel-title')
-	let channelDescription = document.querySelector('#channel-description')
-	let channelCount = document.querySelector('#channel-count')
-	let channelLink = document.querySelector('#channel-link')
-
-	// Then set their content/attributes to our data:
-	channelTitle.innerHTML = channelData.title
-	channelDescription.innerHTML = channelData.description ? channelData.description.html : ''
-	channelCount.innerHTML = channelData.counts.blocks
-	channelLink.href = `https://www.are.na/channel/${channelSlug}`
+// declaring constants of block media types
+const KIND_LABEL = {
+	IMG: 'IMAGE',
+	TXT: 'TXT',
+	URL: 'LINK',
+	MP3: 'AUDIO',
+	MP4:'VIDEO'
 }
-
-
-let blocksById = {}
-
-// retrieve elements from html
-let modal = document.querySelector('#block-modal')
-let modalBody = document.querySelector('#modal-body')
-
-
-// Attribution to LLM (ChatGPT): it suggested using <dialog>.showModal() and body scroll locking in the background.
-// My understanding: This openModal function injects the block's HTML into the modal first, then opens the dialog window.
-
-let openModal = (html) => {
-	// insert html into modal body
-	modalBody.innerHTML = html 	
-
-	// open the <dialog> element with .showModal()
-	modal.showModal() 
-	
-	// adding a class to the element prevents scrolling so that the window is fixed on screen.
-	document.body.classList.add('modal-open') 
-}
-
-
-// Attribution to LLM (ChatGPT): it suggested using <dialog>.close() and removing the body scroll locking in the background.
-// My understanding: This closeModal function closes the modal first, then resumes regular page scrolling.
-let closeModal = () => {
-	// first hide the modal
-	modal.close() 
-
-	// allow page scroll again
-	document.body.classList.remove('modal-open') 
-	
-}
-
-
-// Attribution to LLM (ChatGPT): It suggested assigning the click event with .closest() so clicks on child elements still work for the user
-// My understanding: This function checks what was clicked.
-
-if (modal) {
-	modal.addEventListener('click', (event) => {
-		// event.target is the exact element that's clicked on
-		// .closest() -> find the nearest parent element that matches a selector and checks if the close button was clicked
-		if (event.target && event.target.closest && event.target.closest('#modal-close')) {
-			closeModal()
-			return
-		}
-		// when backdrop area is clicked, close the modal
-		if (event.target === modal) {
-			closeModal()
-		}
-	})
-}
-
 
 
 // Attribution to LLM (ChatGPT): I was trying to figure out a sorting/categorization method to help structure this as a mapping function for the different media types.
@@ -137,6 +76,102 @@ let getImageUrl = (blockData) => {
 	// when no image is found return empty
 	return ''
 }
+
+
+// getSourceUrl returns best URL when user clicks to "equip" the block
+// first tries the source url, then attachment file, then the actual Are.na block page as a fallback
+
+let getSourceUrl = (blockData) => {
+	if (blockData.source && blockData.source.url){
+		return blockData.source.url
+	}
+	if (blockData.attachment & blockData.attachment.url){
+		return blockData.attachment.url
+	}
+	return `https://www.are.na/block/${blockData.id}`
+}
+
+
+
+
+
+
+
+
+// First, let’s lay out some *functions*, starting with our basic metadata:
+let placeChannelInfo = (channelData) => {
+	// Target some elements in your HTML:
+	let channelTitle = document.querySelector('#channel-title')
+	let channelDescription = document.querySelector('#channel-description')
+	let channelCount = document.querySelector('#channel-count')
+	let channelLink = document.querySelector('#channel-link')
+	let hudTitle = document.querySelector('#hud-title-display')
+	let siTotal = document.querySelector('#si-total')
+
+	// Then set their content/attributes to our data:
+	channelTitle.innerHTML = channelData.title
+	channelDescription.innerHTML = channelData.description ? channelData.description.html : ''
+	channelCount.innerHTML = channelData.counts.blocks
+	channelLink.href = `https://www.are.na/channel/${channelSlug}`
+	hudTitle.textContent = channelData.title.toUpperCase()
+	siTotal.textContent = channelData.counts.blocks
+}
+
+
+let blocksById = {}
+
+// retrieve elements from html
+let modal = document.querySelector('#block-modal')
+let modalBody = document.querySelector('#modal-body')
+
+
+// Attribution to LLM (ChatGPT): it suggested using <dialog>.showModal() and body scroll locking in the background.
+// My understanding: This openModal function injects the block's HTML into the modal first, then opens the dialog window.
+
+let openModal = (html) => {
+	// insert html into modal body
+	modalBody.innerHTML = html 	
+
+	// open the <dialog> element with .showModal()
+	modal.showModal() 
+	
+	// adding a class to the element prevents scrolling so that the window is fixed on screen.
+	document.body.classList.add('modal-open') 
+}
+
+
+// Attribution to LLM (ChatGPT): it suggested using <dialog>.close() and removing the body scroll locking in the background.
+// My understanding: This closeModal function closes the modal first, then resumes regular page scrolling.
+let closeModal = () => {
+	// first hide the modal
+	modal.close() 
+
+	// allow page scroll again
+	document.body.classList.remove('modal-open') 
+	
+}
+
+
+// Attribution to LLM (ChatGPT): It suggested assigning the click event with .closest() so clicks on child elements still work for the user
+// My understanding: This function checks what was clicked.
+
+if (modal) {
+	modal.addEventListener('click', (event) => {
+		// event.target is the exact element that's clicked on
+		// .closest() -> find the nearest parent element that matches a selector and checks if the close button was clicked
+		if (event.target && event.target.closest && event.target.closest('#modal-close')) {
+			closeModal()
+			return
+		}
+		// when backdrop area is clicked, close the modal
+		if (event.target === modal) {
+			closeModal()
+		}
+	})
+}
+
+
+
 
 
 
@@ -484,7 +519,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	setFilters()
 
 	// The nav element is selected from the DOM. If it exists, a custom data attribute (data-count) is set to the total number of items returned from the Are.na API (json.data.length). 
-	// This allows the count to be accessed in CSS (via attr()) or JavaScript for display, filtering, or interface feedback.
+	// This allows the count to be accessed in CSS (via attr()) or JavaScript for display, filtering, or interface feedback.A
 	let nav = document.querySelector('nav')
 
 	// This pattern separates data from presentation by storing state in a semantic data attribute rather than hardcoding values.
