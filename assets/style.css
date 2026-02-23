@@ -316,6 +316,14 @@ The animation takes use of vertical transforms to showcase the movement of stars
     }
 }
 
+@keyframes promptBlink {
+    0%, 100% { 
+        opacity: 1; 
+    }
+    50% { 
+        opacity: .2; 
+    }
+}
 
 
 
@@ -332,6 +340,7 @@ The animation takes use of vertical transforms to showcase the movement of stars
     opacity:0;
     pointer-events: none;
     transition:opacity .05s ease;
+    
 }
 
 #hero-flash.on{
@@ -341,6 +350,7 @@ The animation takes use of vertical transforms to showcase the movement of stars
 /* for hero screen */
 
 #hero {
+    
     position:fixed;
     inset:0;
     z-index:8000;
@@ -544,7 +554,8 @@ The animation takes use of vertical transforms to showcase the movement of stars
     font-size:.65rem;
     letter-spacing:.3em;
     color:var(--white);
-    /* opacity:0; */
+    opacity:0;
+    animation: promptBlink 1.4s ease infinite;
 
 }
 /* TODO add animation */
@@ -612,8 +623,39 @@ The animation takes use of vertical transforms to showcase the movement of stars
 
 
 
+#shell {
+    position:relative;
+    z-index:1;
+    width:100vw;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:3rem;
+}
+#panel-container{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    width: 92vw;
+    height:90vh;
+    filter:drop-shadow(var(--black));
+}
 
-
+#hud-bar{
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 5px 12px;
+    height: 36px;
+    background: linear-gradient(to right, rgba(36,23,77,.9), rgba(8,14,12,.9));
+    border: 1px solid var(--panel-bdr2);
+    border-bottom: 2px solid rgba(0,212,172,.4);
+}
+.hud-blink{
+    
+}
 
 
 
