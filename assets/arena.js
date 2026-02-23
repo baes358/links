@@ -185,6 +185,65 @@ let showToast = (msg) => {
 
 
 
+// Then our big function for specific-block-type rendering:
+
+// Attribution to LLM (ChatGPT): It suggested showing  thumbnails of blocks as a render approach for a clean grid view that users can navigate throughout
+// My understanding: renderBlock() function creates an <li> with a thumbnail image or placeholder text if it does not exist.
+let renderBlock = (blockData) => {
+	// To start, a shared ul where we’ll insert all our blocks 
+	let channelBlocks = document.querySelector('#channel-blocks') 
+	// store blocks by their id so modal can look it up later
+	blocksById[blockData.id] = blockData 
+	// want to only show thumbnail media initially 
+	
+	let thumbnail = '' 
+	let thumbMedia = ''
+	let kind = getKind(blockData)
+	
+
+	// block has thumbnail image
+	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){ 
+		thumbnail = blockData.image.large.src_2x 
+
+		thumbMedia =
+		`
+		<img src="${ thumbnail }" >
+		`
+	} 
+	
+	// If block has no thumbnail available, show a placeholder UI card with the block title + type
+	else {
+		let blockTitle = ''
+
+		if (blockData.title){
+			blockTitle = blockData.title
+		}
+		else {
+			blockTitle = blockData.type
+		}
+
+		thumbMedia =
+		`
+		<section class="thumb-placeholder">
+    		<p>${ blockTitle }</p>
+  		</section>
+		`
+	}
+	
+	// use data-block-id to open modal
+	// data-kind is used for filtering toggles
+	thumbItem = 
+	`
+	<li class="content" data-block-id="${ blockData.id }" data-kind="${ kind }"> 
+		${ thumbMedia }
+	</li> 
+	`
+	// And puts it into the page! 
+	channelBlocks.insertAdjacentHTML('beforeend', thumbItem)
+
+
+}
+
 
 
 
@@ -403,64 +462,7 @@ let buildModal = (blockData) => {
 
 
 
-// Then our big function for specific-block-type rendering:
 
-// Attribution to LLM (ChatGPT): It suggested showing  thumbnails of blocks as a render approach for a clean grid view that users can navigate throughout
-// My understanding: renderBlock() function creates an <li> with a thumbnail image or placeholder text if it does not exist.
-let renderBlock = (blockData) => {
-	// To start, a shared ul where we’ll insert all our blocks 
-	let channelBlocks = document.querySelector('#channel-blocks') 
-	// store blocks by their id so modal can look it up later
-	blocksById[blockData.id] = blockData 
-	// want to only show thumbnail media initially 
-	
-	let thumbnail = '' 
-	let thumbMedia = ''
-	let kind = getKind(blockData)
-	
-
-	// block has thumbnail image
-	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){ 
-		thumbnail = blockData.image.large.src_2x 
-
-		thumbMedia =
-		`
-		<img src="${ thumbnail }" >
-		`
-	} 
-	
-	// If block has no thumbnail available, show a placeholder UI card with the block title + type
-	else {
-		let blockTitle = ''
-
-		if (blockData.title){
-			blockTitle = blockData.title
-		}
-		else {
-			blockTitle = blockData.type
-		}
-
-		thumbMedia =
-		`
-		<section class="thumb-placeholder">
-    		<p>${ blockTitle }</p>
-  		</section>
-		`
-	}
-	
-	// use data-block-id to open modal
-	// data-kind is used for filtering toggles
-	thumbItem = 
-	`
-	<li class="content" data-block-id="${ blockData.id }" data-kind="${ kind }"> 
-		${ thumbMedia }
-	</li> 
-	`
-	// And puts it into the page! 
-	channelBlocks.insertAdjacentHTML('beforeend', thumbItem)
-
-
-}
 
 
 // Attribution to LLM (ChatGPT): It suggested using aria-pressed property + [hidden] for a toggles in the nav.
