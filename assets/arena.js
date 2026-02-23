@@ -530,7 +530,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		// to store as selected for the action buttons to reference on user's end
 		selectedBlock = { 
 			blockData, 
-			el: clicked 
+			cell: clicked 
 		}
 
 		// finds the position of this block in the existing inventory grid
@@ -544,4 +544,29 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 
 		showDetail(blockData, index)
 	})
+
+
+	// adding event logic for clicking on equip button -> directs user to original link
+	let equipBtn = document.querySelector('#btn-equip')
+	equipBtn.addEventListener('click', () => {
+		if (!selectedBlock) return
+		window.open(getSourceUrl(selectedBlock.blockData), '_blank', 'noopener')
+		showToast('OPENING IN NEW TAB ↗')
+	})
+
+	// adding event logic for clicking on drop button -> hides to show initial state of right panel
+	let dropBtn = document.querySelector('#btn-drop')
+	dropBtn.addEventListener('click', () => {
+		if (!selectedBlock) return
+
+		selectedBlock.cell.style.transition = 'opacity .3s ease'
+		selectedBlock.cell.style.opacity = '0'
+		setTimeout(() => {
+			selectedBlock.cell.hidden = true
+			resetDetail()
+		}, 300)
+
+		showToast('REMOVED FROM VIEW ✕')
+	})
+
 })
