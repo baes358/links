@@ -895,30 +895,43 @@ nav.filters ul li{
 
 button.filter-toggle{
     background: transparent;
-    border:none;
-    
-    width:fit-content;
-    letter-spacing: 0.08em;
+    border:.0625rem solid var(--panel-bdr);
     padding:.3rem .5rem;
     cursor:url('../media/cursor.png'),auto;
     display:flex;
     flex-direction:column;
-    gap: .5rem;
-    transition: transform 0.1s ease;
+    align-items:center;
+    gap: .3rem;
+    transition: border-color 0.12s,
+                background .12s;
+    border-radius:.0625rem;
     
 }
 button.filter-toggle:hover{
-    transform: translateY(-1px);
+    border-color:rgba(0,212,172,.4);
+    background: rgba(0,212,172,.04);
 }
-button.filter-toggle:focus{
-    /* outline: 1px solid var(--linear1);
-    outline-offset: 2px; */
 
-    h4.filter-label{
+h4.filter-label{
+    font-family:'Orbitron';
+    font-size:.5rem;
+    font-weight:400;
+    letter-spacing:.1em;
+    color: var(--gray4);
+    text-transform:uppercase;
+    text-align:center;
+    margin:0;
+}
+
+/* active filter button highlights the label green */
+button.filter-toggle[aria-pressed="true"] h4.filter-label {
     color: var(--green1);
-    }
+    text-shadow: 0 0 6px rgba(0,212,172,.5);
 }
 
+
+
+/* ON / OFF switch */
 section.filter-switch{
     border: 1px solid var(--yellow);
     display:flex;
@@ -933,10 +946,11 @@ section.filter-switch .on,
 section.filter-switch .off{
     background: transparent;
     color:var(--white);
-    opacity: 0.7;
-    padding:.2rem .45rem;
-    font-size:.55rem;
-    transform: translateY(-1px);
+    opacity: 0.5;
+    padding: 0.15rem .35rem;
+    font-family:'Orbitron';
+    font-size:.38rem;
+    letter-spacing:.05em;
 }
 
 
@@ -945,12 +959,13 @@ button.filter-toggle[aria-pressed="true"] .filter-switch .on{
     background: var(--linear1);
     color: var(--black);
     font-weight:700;
+    opacity:1;
 }
 /* OFF state highlight */
 button.filter-toggle[aria-pressed="false"] .filter-switch .off{
   
     background: var(--linear1);
-    color: black;
+    color: var(--black);
     opacity: 1;
     border-radius:0 5px 5px 0;
 }
