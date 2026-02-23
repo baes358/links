@@ -215,6 +215,8 @@
                         
 
                         <section id="detail-scroll">
+
+                            <!-- initial state with channel info -->
                             <section id="state-info">
                                 <!-- section label for right panel -->
                                 <h4 class="si-sect-label">ARCHIVE</h3>
@@ -242,14 +244,24 @@
                                 
                             </section>
 
-                            <section id="detail-actions">
-                                <button id="btn-equip">EQUIP ↗</button>
-                                <button id="btn-drop">DROP ✕</button>
+
+                            <!-- selected block state details -->
+                            <section id="state-detail">
+                                <section class="sd-category" id="sd-cat">-</section>
+                                <section class="sd-name" id="sd-name">-</section>
+                                <section class="sd-textbox" id="sd-desc">-</section>
+                                <section class="sd-stats" id="sd-stats">-</section>
                             </section>
 
+                            
 
 
 
+                        </section>
+
+                        <section id="detail-actions">
+                                <button id="btn-equip">EQUIP ↗</button>
+                                <button id="btn-drop">DROP ✕</button>
                         </section>
 
 
