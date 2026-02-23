@@ -1244,6 +1244,37 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     color: var(--green1);
 }
 
+
+/* for total blocks viewed */
+.si-stat{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:.25rem .44rem;
+    border: 1px solid var(--panel-bdr);
+    background:var(--black);
+}
+.si-stat-label{
+    font-family:'Orbitron';
+    font-size:.36rem;
+    letter-spacing:.1em;
+    color:var(--gray4);
+    margin:0;
+}
+.si-stat span{
+    font-family:'Orbitron';
+    font-size:.5rem;
+    color:var(--green1);
+    text-shadow: 00 5px var(--green1);
+}
+
+
+
+
+
+
+
+
 /* hgroup{
     padding-inline:2rem;
     padding-block:5rem;
