@@ -654,7 +654,46 @@ The animation takes use of vertical transforms to showcase the movement of stars
     border-bottom: 2px solid rgba(0,212,172,.4);
 }
 .hud-blink{
-    
+    font-size: .4rem;
+    color:var(--green1);
+    animation:blink 1.2s step-end infinite;
+}
+.hud-title{
+    font-family: 'Orbitron';
+    font-size: .75rem;
+    font-weight:700;
+    letter-spacing:.2em;
+    background:linear-gradient(to right, var(--green1), var(--yellow));
+    background-clip: text;
+    color: transparent;
+    animation: glitch 5s infinite;
+}
+.hud-pipe{
+    color:var(--panel-bdr2);
+    font-size:.7rem;
+}
+.hud-stat{
+    font-family: 'Orbitron';
+    font-size: .45rem;
+    letter-spacing: .12em;
+    color: var(--gray4);
+}
+.hud-stat b {
+    color: var(--green1);
+}
+/* pushes TOTAL to far right */
+.hud-gap{
+    flex:1;
+}
+.hud-total{
+    font-family: 'Orbitron';
+    font-size: .45rem;
+    letter-spacing: .12em;
+    color: var(--gray4);
+}
+.hud-total b{
+    color:var(--yellow);
+    animation:blink 2s step-end infinite;
 }
 
 
