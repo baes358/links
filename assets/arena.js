@@ -375,7 +375,21 @@ let showDetail = (block, index) => {
 
 
 
+// Attribution to LLM (Claude AI): It suggested a reset function to clear the detail panel on right so that the channel info populates again
+// My understanding: resetDetail() restores the right panel to its default state by removing the active highlight from any selected block, hiding the detail panel, showing the original info panel, resetting the header label to “DETAILS,” and clearing the stored reference to the previously selected block
+let resetDetail = () => {
+	// removes selected highlight from whichever block was active for details panel
+	document.querySelectorAll('.content.selected').forEach(block => block.classList.remove('selected'))
 
+	// need to swap panels bakc to its initial state
+	document.querySelector('#state-detail').classList.remove('show')
+	document.querySelector('#state-info').classList.remove('gone')
+	document.querySelector('#detail-header-label').textContent = 'DETAILS'
+
+	selectedBlock = null
+
+
+}
 
 
 
@@ -395,7 +409,7 @@ let applyFilters = () => {
 		// what category this toggle controls
 		let kind = button.getAttribute('data-kind')
 		// this is the current state
-		let on = button.getAttribute('aria-pressed') == 'true'
+		let on = button.getAttribute('aria-pressed') === 'true'
 		actives[kind] = on
 	})
 
