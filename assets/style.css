@@ -1048,7 +1048,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 
 /* each tile */
 .content{
-  display: block;
+  /* display: block; */
   width: 100%;
   aspect-ratio: 1 / 1;
   position: relative;
