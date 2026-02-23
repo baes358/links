@@ -19,10 +19,8 @@ let scanned = 0
 let selectedBlock = null
 
 
-// Attribution to LLM (ChatGPT): I was trying to figure out a sorting/categorization method to help structure this as a mapping function for the different media types.
-
-// My understanding: getKind function returns a short label used for titles on modal windows and filtering.
-
+// Attribution to LLM (ChatGPT): I was trying to figure out a sorting/categorization method to help structure this as a mapping function for the different media types. And so, ChatGPT suggested I create a helper function to get the actual "kind" or type of media block -> to be used in other main functions
+// My understanding: getKind function matches types of the block and returns a short label accordingly that will be used for titles and filtering.
 let getKind = (blockData) => {
 	if (blockData.type == 'Image'){
 		return 'IMG'
@@ -68,12 +66,12 @@ let getKind = (blockData) => {
 // My understanding: getImageUrl function returns the best available image URL for a block, or '' if none exists.
 let getImageUrl = (blockData) => {
 
-	// prefer large quality pictures for thumbnails + modals
+	// checks for these properties and prefers large quality pictures for thumbnails
 	if (blockData.image && blockData.image.large && blockData.image.large.src_2x){
 		return blockData.image.large.src_2x
 	}
 
-	// fallback to original if large size isn’t available
+	// fallback to original image source if large size isn’t available
 	if (blockData.image && blockData.image.original && blockData.image.original.url){
 		return blockData.image.original.url
 	}
@@ -83,9 +81,8 @@ let getImageUrl = (blockData) => {
 }
 
 
-// getSourceUrl returns best URL when user clicks to "equip" the block
+// Inspired by the getImageUrl() function, I created getSourceUrl() to return the best URL when user later clicks to "equip" the block -> directs to external link
 // first tries the source url, then attachment file, then the actual Are.na block page as a fallback
-
 let getSourceUrl = (blockData) => {
 	if (blockData.source && blockData.source.url){
 		return blockData.source.url
@@ -110,6 +107,8 @@ let placeChannelInfo = (channelData) => {
 	let channelDescription = document.querySelector('#channel-description')
 	let channelCount = document.querySelector('#channel-count')
 	let channelLink = document.querySelector('#channel-link')
+
+	// I added the hudTitle and siTotal to add as extra elements 
 	let hudTitle = document.querySelector('#hud-title-display')
 	let siTotal = document.querySelector('#si-total')
 
@@ -154,7 +153,9 @@ let renderUser = (userData) => {
 
 
 
-// create a function that updates how many blocks the user has "scanned", or viewed, so far
+// Attribution to LLM (ChatGPT): It suggested formatting the scanned counter with padStart() so the number would always appear as three digits (like 001, 002, etc.), keeping the UI count visually consistent no matter how many blocks were scanned
+
+// My understanding: updateScanned() converts the scanned number into a string, pads it to three digits with leading zeros using padStart(), and updates the text content of both #h-scan and #si-scanned in the DOM so the interface reflects how many unique blocks the user has viewed so far
 let updateScanned = () => {
 	let display = scanned.toString().padStart(3, '0')
 
@@ -166,11 +167,9 @@ let updateScanned = () => {
 
 
 
-// create a function to show a toast message -> small mini notification that shows temporarily
-// Attribution to LLM (ChatGPT): It suggested using a toast message like how some video games use, specifically helping me with the timeout.
-// My understanding: 
-// clearTimeout() helps to cancel any previously schedules animation. 
-// setTimeout() creates a new timer and has duration of 2200 or 2.2 seconds, also removing the class name that was previously added
+// Attribution to LLM (ChatGPT): It suggested using a toast notification pattern using setTimeout and clearTimeout to manage the timing and prevent overlapping animations
+
+// My understanding: showToast() selects the #toast element, sets its message text, and then adds the "show" class to trigger a visible state. clearTimeout(toast._timer) ensures any previously running timeout is canceled so that multiple rapid calls to the notification don’t stack or glitch. Then setTimeout() starts a new 2200ms (2.2 seconds) timer that removes the "show" class, which hides the toast after the duration
 
 let showToast = (msg) => {
 	let toast = document.querySelector('#toast')
@@ -187,8 +186,9 @@ let showToast = (msg) => {
 
 // Then our big function for specific-block-type rendering:
 
-// Attribution to LLM (ChatGPT): It suggested showing  thumbnails of blocks as a render approach for a clean grid view that users can navigate throughout
-// My understanding: renderBlock() function creates an <li> with a thumbnail image or placeholder text if it does not exist.
+// Attribution to LLM (ChatGPT): It suggested structuring each block as a thumbnail and storing the block data in a lookup object (blocksById) so that the grid is "inspectable" like an actual game inventory, and users can access full details of a block through click event handlers.
+
+// My understanding: renderBlock() selects the shared #channel-blocks container and generates a thumbnail-based list item for each block. It determines the block’s kind, saves the full block data in blocksById for later reference, and uses getImageUrl() to decide whether to render an image thumbnail or a placeholder with text (depending on what is available through Are.na API). The function then inserts the <li> into the HTML DOM, attaching data attributes (data-block-id and data-kind) to support click event handlers and filtering logic
 let renderBlock = (blockData) => {
 	// To start, a shared ul where we’ll insert all our blocks 
 	let channelBlocks = document.querySelector('#channel-blocks') 
@@ -237,9 +237,9 @@ let renderBlock = (blockData) => {
 
 
 
-// Attribution to LLM (Claude AI): It suggested a structure for a block's details on the right panel, as I wanted to recreate an inventory screen like from the video game RAGE
-// My understanding: showDetail() fills in the right hand panel with a block's details once a user clicks on one
+// Attribution to LLM (Claude AI): It suggested structuring the detail panel as a "state-driven UI" that conditionally renders metadata, media previews, and formatted stats based on the block’s type.
 
+// My understanding: showDetail() switches the right panel from its default state (which is initially showing the channel info) to a detailed view when a specific block is selected by the user. It determines the block’s type, the created date, descriptions, and media previews depending on whether the block contains an image, video, audio file, or embed. Then, the function inserts the structured content into the DOM, formats the index with padStart() for visual consistency, and resets the scroll position so each newly selected block starts at top of detail panel
 let showDetail = (block, index) => {
 	let kind = getKind(block)
 
@@ -378,7 +378,7 @@ let showDetail = (block, index) => {
 
 
 
-// Attribution to LLM (Claude AI): It suggested a reset function to clear the detail panel on right so that the channel info populates again
+// Attribution to LLM (Claude AI): It suggested a reset function to clear the detail panel on right so that the channel info (initial state) populates again
 // My understanding: resetDetail() restores the right panel to its default state by removing the active highlight from any selected block, hiding the detail panel, showing the original info panel, resetting the header label to “DETAILS,” and clearing the stored reference to the previously selected block
 let resetDetail = () => {
 	// removes selected highlight from whichever block was active for details panel
@@ -398,8 +398,9 @@ let resetDetail = () => {
 
 
 
-// Attribution to LLM (ChatGPT): It suggested using aria-pressed property + [hidden] for a toggles in the nav.
-// My understanding: applyFilters reads the toggle states true/false and hides/shows blocks based on the block's data-kind.
+// Attribution to LLM (ChatGPT): It suggested using aria-pressed for toggle state management and the [hidden] attribute to efficiently control element visibility without manually adding/removing CSS classes.
+
+// My understanding: applyFilters() reads the current state of each .filter-toggle button by checking its aria-pressed value and builds an object that maps each media kind (IMG, TXT, MP3, etc.) to true or false. It then loops through all rendered block elements, compares their data-kind attribute to the active map, and sets their hidden property accordingly. This separates UI state (toggle buttons) from rendering logic (block visibility) while keeping the filtering system declarative.
 let applyFilters = () => {
 	// what kinds of data are currently on
 	// maps like { IMG: true, MP3: false, ... }
@@ -428,9 +429,9 @@ let applyFilters = () => {
 
 }
 
-// setting up the actual filters for each respective block
-// Attribution to LLM (ChatGPT): It suggested attaching click handlers once and calling applyFilters after the actual toggles change.
-// My understanding: setFilters() manipulates the aria-pressed property through button clicks, then re-filters blocks accordingly
+// Attribution to LLM (ChatGPT): It suggested centralizing toggle behavior by attaching click event listeners once and triggering a shared filtering function (applyFilters) whenever a toggle’s state changes.
+
+// My understanding: setFilters() selects all .filter-toggle buttons and attaches a click listener to each one. When clicked, the function reads the current aria-pressed value, toggles it between 'true' and 'false', and then calls applyFilters() to update which blocks are visible to user. Running applyFilters() once at the end makes sure that the interface works in the correct filtered state when the page first loads
 let setFilters = () => {
 	let toggle = document.querySelectorAll('.filter-toggle')
 
@@ -495,9 +496,9 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		renderBlock(blockData) // Pass the single block’s data to the render function.
 	})
 
-	// implementation with guidance from Claude
-	// setFilters() applies filtering logic to the displayed blocks and updates the navigation UI with the current total count.
+	// Attribution to LLM (Claude AI): It suggested using the filtering logic immediately after rendering blocks so that the UI state and navigation reflect the current dataset from the API
 
+	// My understanding: setFilters() is called once the blocks are rendered to ensure the toggle system is active and the interface reflects the correct visible state. 
 	setFilters()
 
 	// The nav element is selected from the DOM. If it exists, a custom data attribute (data-count) is set to the total number of items returned from the Are.na API (json.data.length). 
@@ -507,8 +508,14 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	// This pattern separates data from presentation by storing state in a semantic data attribute rather than hardcoding values.
 	if (nav) nav.setAttribute('data-count', json.data.length)
 
-	// Attribution to LLM (ChatGPT): It suggested click event on #channel-blocks for dynamic <li> items which are the Are.na content blocks themselves.
-	// My understanding: clicking on any thumbnail finds its nearest li[data-block-id], then opens that block in the modal.
+
+
+
+
+
+	// Attribution to LLM (ChatGPT): It suggested using event delegation on #channel-blocks to handle clicks for dynamically generated <li> elements instead of having to manually attach individual listeners to each block.
+
+	// My understanding: A single click listener is attached to the parent #channel-blocks container. When a user clicks anywhere inside it, event.target.closest('li[data-block-id]') should identify the relevant block item, even if the click occurred on a nested element like an <img>. The code then retrieves the stored block data, updates the selected state visually AND logically, calculates the block’s index in the grid, and increments the scanned counter only if that block hasn’t been viewed before (tracked using a Set). Finally, showDetail() renders the selected block’s detailed view.
 	let channelBlocks = document.querySelector('#channel-blocks')
 	let scannedBlocks = new Set()
 
@@ -519,6 +526,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 
 
 	
+		// clicking on any thumbnail finds its nearest li[data-block-id], then opens that block in the modal.
 		let clicked = event.target.closest('li[data-block-id]')
 		if (!clicked) return
 
@@ -542,7 +550,9 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		let index = allBlocks.indexOf(clicked)
 
 
-		// need to update the scanned counter
+		// Attribution to LLM (ChatGPT): It suggested using a Set, not an Array, to track which block IDs have already been viewed so the scanned counter only increments once per unique block.
+
+		// My understanding: Before increasing the scanned counter, the code checks whether the current block’s ID already exists inside the scannedBlocks Set. If it does not, the ID is added to the Set, scanned is incremented, and updateScanned() refreshes the UI. A Set is more appropriate than an array here because it automatically enforces uniqueness of the block and allows for efficient lookup with .has(), avoiding duplicate entries and unnecessary iteration checks. And to my understanding, arrays are not as efficient because .includes() has to loop through the entire array to check if the value exists
 		let blockId = blockData.id
 
 		if (!scannedBlocks.has(blockId)){
@@ -556,6 +566,10 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	})
 
 
+	// Attribution to LLM (ChatGPT): It helped me to structure the action buttons (EQUIP + DROP) with defensive guard clauses.
+
+	// My understanding: The equip button checks whether a block is currently selected and, if it is, it opens its original source URL in a new tab using window.open() with the 'noopener' security parameter. It then triggers a toast notification for interface feedback so that the user is notified. 
+
 	// adding event logic for clicking on equip button -> directs user to original link
 	let equipBtn = document.querySelector('#btn-equip')
 	equipBtn.addEventListener('click', () => {
@@ -563,6 +577,8 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		window.open(getSourceUrl(selectedBlock.blockData), '_blank', 'noopener')
 		showToast('OPENING IN NEW TAB ↗')
 	})
+
+	// My understanding: The drop button similarly guards against null selection, applies a short opacity transition for visual feedback, hides the block after 300ms, resets the detail panel to its default state, and shows a confirmation toast notification. Both interactions rely on the shared selectedBlock state to make sure that the actions apply only to the actively selected block
 
 	// adding event logic for clicking on drop button -> hides to show initial state of right panel
 	let dropBtn = document.querySelector('#btn-drop')
@@ -584,6 +600,9 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 let hero = document.querySelector('#hero')
 let flash = document.querySelector('#hero-flash')
 
+// Attribution to LLM (Claude AI): It suggested using setTimeout calls to choreograph the hero screen transition animation and the keydown event listener with the { once: true } option so that the interaction only triggers once
+
+// My understanding: enterInventory() adds a temporary flash effect, then removes it after 80ms while adding a “leaving” class to animate the hero screen out. A second setTimeout then hides the hero element after the animation completes
 let enterInventory = () => {
 	flash.classList.add('on')
 	setTimeout(() => {
@@ -597,8 +616,10 @@ let enterInventory = () => {
 }
 
 
-// event listeners for when user is at hero screen and wants to enter inventory by clicking or using any key
 
+// My understanding: The click listener allows mouse interaction, while the keydown listener enables keyboard entry. Using { once: true } makes sure that the keydown event only fires one time, which prevents repeated triggers or animation glitches if the user presses multiple keys
+
+// event listeners for when user is at hero screen and wants to enter inventory by clicking or using any key
 hero.addEventListener('click', enterInventory)
 
 window.addEventListener('keydown', () => {
