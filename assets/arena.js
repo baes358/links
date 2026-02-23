@@ -570,3 +570,30 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	})
 
 })
+
+let hero = document.querySelector('#hero')
+let flash = document.querySelector('#hero-flash')
+
+let enterInventory = () => {
+	flash.classList.add('on')
+	setTimeout(() => {
+		flash.classList.remove('on')
+		hero.classList.add('leaving')
+
+	}, 80)
+	setTimeout(() => {
+		hero.style.display = 'none'
+	}, 1000)
+}
+
+
+// event listeners for when user is at hero screen and wants to enter inventory by clicking or using any key
+
+hero.addEventListener('click', enterInventory)
+
+window.addEventListener('keydown', () => {
+	if (!hero.classList.contains('leaving')) enterInventory()
+},
+	// event listener fires only once
+	{ once: true }
+)
