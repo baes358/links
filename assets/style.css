@@ -31,6 +31,7 @@
     --gray2: #242630;
     --gray3: #20373F;
     --gray4: #5c676a;
+    --gray5: #7e8587;
     --linear3: linear-gradient(135deg, var(--gray2), var(--gray1));
     --radial1: radial-gradient( var(--gray3), var(--gray2), var(--gray1));
 
@@ -594,7 +595,7 @@ The animation takes use of vertical transforms to showcase the movement of stars
     font-family:'Orbitron';
     font-size:.75rem;
     letter-spacing:.25em;
-    color:var(--gray4);
+    color:var(--gray5);
     margin-top:1.4rem;
     /* opacity:0; */
 
@@ -807,10 +808,10 @@ The animation takes use of vertical transforms to showcase the movement of stars
     animation:blink 1.2s step-end infinite;
 }
 .hud-title{
-    font-family: 'Orbitron';
+    font-family: 'Zen';
     font-size: .75rem;
-    font-weight:700;
-    letter-spacing:.2em;
+    font-weight:900;
+    letter-spacing:.05em;
     background:linear-gradient(to right, var(--green1), var(--yellow));
     background-clip: text;
     color: transparent;
@@ -921,14 +922,14 @@ The animation takes use of vertical transforms to showcase the movement of stars
 @media (780px <= width <= 1280px) {
     #panel-inv{
         flex: 58;
-        overflow:hidden;
+        
     }
 }
 
 @media (width > 1280px) {
     #panel-inv{
         flex: 58;
-        overflow:hidden;
+        
     }
 
 }
@@ -1047,23 +1048,36 @@ The animation takes use of vertical transforms to showcase the movement of stars
 
 
 nav.filters{
-    position:static;
+    position:sticky;
+    top:0;
+    z-index:5;
     backdrop-filter:none;
-    background:var(--black);border-bottom:.0625 solid var(--panel-bdr);
+    background:var(--black);
+    border-bottom:.0625 solid var(--panel-bdr);
     box-shadow:none;
     padding: .25rem .375rem;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+    flex-shrink:0;
+
+}
+nav.filters::-webkit-scrollbar { 
+    display: none; 
 }
 
 nav.filters ul.filter-list{
     list-style:none;
     display:flex;
     flex-direction:row;
-    justify-content: space-evenly;
-    gap:.125rem;
+    justify-content:space-between;
+    /* gap:.05rem; */
+    /* width:max-content; */
 }
 
 nav.filters ul li{
     font-size:inherit;
+    flex-shrink:0;
 }
 
 
@@ -1149,44 +1163,48 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 
 /* for actual inventory blocks */
 #channel-blocks{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .125rem;
-  padding: .125rem;
-  list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .125rem;
+    padding: .125rem;
+    list-style: none;
 
-  /* good defaults */
-  align-content: start;
+    /* good defaults */
+    align-content: start;
+    align-items:start;
+    /* flex:1;
+    min-height:0; */
+    /* overflow-y:auto; */
 }
 
 /* small screens */
 @media (360px <= width <= 780px){
-  #channel-blocks{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+    #channel-blocks{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 /* medium */
 @media (780px <= width <= 1280px){
-  #channel-blocks{
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
+    #channel-blocks{
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
 }
 
 /* large */
 @media (width > 1280px){
-  #channel-blocks{
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
+    #channel-blocks{
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
 }
 
 /* each tile */
 .content{
-  /* display: block; */
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  position: relative;
-  overflow: hidden;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
 }
 /* offset animation so it moves randomly */
 /* .content:nth-child(2n){
@@ -1205,6 +1223,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 .content:hover{
     border-color:var(--green1);
     background:var(--light1);
+    /* transition:scale(1.04%); */
 }
 
 /* JS state for when user clicks on certain block */
@@ -1278,6 +1297,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     padding: .75rem;
     text-align: center;
     background:var(--linear3);
+    overflow:hidden;
 
 }
 
@@ -1286,7 +1306,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     font-weight:400;
     margin: 0;
     font-size:.5rem;
-    line-height: 1rem;
+    line-height: 1.4;
 
     text-transform: uppercase;
     color:var(--gray4);
@@ -1295,6 +1315,9 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 
     /* breaks super_long_strings.mp3 */
     overflow-wrap:break-word;   
+    /* max 4 lines before truncating */
+    --webkit-line-clamp: 4; 
+
 }
 .content:hover .thumb-placeholder p,
 .content.selected .thumb-placeholder p{
@@ -1343,6 +1366,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     font-size:1rem;
     letter-spacing:.05em;
     line-height:1.2;
+    text-transform:uppercase;
     background: linear-gradient(to bottom, var(--green1), var(--yellow));
     background-clip: text;
     color: transparent;
@@ -1355,7 +1379,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     font-family:'Orbitron';
     font-size:.6rem;
     line-height:1.7;
-    color:var(--gray4);
+    color:var(--gray5);
     border: var(--1px) solid var(--panel-bdr);
     padding: .45rem;
     background:var(--balck);
@@ -1368,7 +1392,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 #channel-users{
     font-family: 'Orbitron';
     font-size:.5rem;
-    color:var(--gray4);
+    color:var(--gray5);
     line-height:1.8;
     margin:0;
 }
@@ -1423,7 +1447,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     font-family:'Orbitron';
     font-size:.36rem;
     letter-spacing:.1em;
-    color:var(--gray4);
+    color:var(--gray5);
     margin:0;
 }
 .si-stat span{
