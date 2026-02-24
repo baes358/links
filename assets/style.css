@@ -597,6 +597,7 @@ The animation takes use of vertical transforms to showcase the movement of stars
     letter-spacing:.25em;
     color:var(--gray5);
     margin-top:1.4rem;
+    text-align:center;
     /* opacity:0; */
 
 }
