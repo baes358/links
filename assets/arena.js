@@ -428,8 +428,13 @@ let applyFilters = () => {
 	blockContent.forEach((item) => {
 		let kind = item.getAttribute('data-kind')
 		let show = actives[kind]
-		// [hidden] is a native HTML way to hide elements
-		item.hidden = !show 
+		// if show is true, element’s inline display style is cleared so it becomes visible again
+		// if false, hide display
+		if (show) {
+			item.style.display = ''
+		} else {
+			item.style.display = 'none'
+		}
 	})
 
 
