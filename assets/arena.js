@@ -259,6 +259,11 @@ let showDetail = (block, index) => {
 		descHtml = block.description.html
 	} else if (block.content && block.content.html) {
 		descHtml = block.content.html
+	} else if (block.content && typeof block.content === 'string'){
+		descHtml = 
+		`
+		<p>${block.content}</p>
+		`
 	}
 
 
@@ -279,7 +284,7 @@ let showDetail = (block, index) => {
 	// for the blocks description
 	let sdDesc = document.querySelector('#sd-desc')
 	if (block.source && block.source.url) {
-		sdDesc.innerHtml = 
+		sdDesc.innerHTML = 
 		`
 		<a class="sd-link" href="${block.source.url}" target="_blank" rel="noopener">
 			<i class="fa-solid fa-link"></i>
@@ -288,7 +293,7 @@ let showDetail = (block, index) => {
 		${descHtml}
 		`
 	} else {
-		sdDesc.innerHtml = descHtml
+		sdDesc.innerHTML = descHtml
 	}
 
 

@@ -1356,7 +1356,9 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     /* breaks super_long_strings.mp3 */
     overflow-wrap:break-word;   
     /* max 4 lines before truncating */
-    --webkit-line-clamp: 4; 
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4; 
 
 }
 .content:hover .thumb-placeholder p,
@@ -1422,7 +1424,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     color:var(--gray5);
     border: var(--1px) solid var(--panel-bdr);
     padding: .45rem;
-    background:var(--balck);
+    background:var(--black);
     margin:0;
 }
 .sd-textbox.italic{
@@ -1532,6 +1534,8 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     letter-spacing:.07em;
     color:var(--graywhite);
     line-height:1.4;
+    overflow-wrap:break-word;
+    word-break:break-word;
 }
 /* for source url link from js */
 .sd-link{
@@ -1555,7 +1559,8 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     text-overflow:ellipsis;
     white-space:nowrap;
 }
-.sd-link:hover{var(--pale3);
+.sd-link:hover{
+    color:var(--pale3);
 }
 
 
