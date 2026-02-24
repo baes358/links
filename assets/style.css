@@ -1659,7 +1659,10 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     color: var(--drop);
 }
 
-
+/* I was not sure how to target this element from JS through CSS, so I asked Claude AI to help me structure the element label. */
+#detail-actions:has(#btn-drop[style*="display: none"]) {
+    grid-template-columns: 1fr;
+}
 
 
 

@@ -607,6 +607,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		setTimeout(() => {
 			selectedBlock.cell.hidden = true
 			resetDetail()
+			closeDrawer()
 		}, 300)
 
 		showToast('REMOVED FROM VIEW ✕&#xFE0E;')
