@@ -563,6 +563,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 		
 
 		showDetail(blockData, index)
+		openDrawer()
 	})
 
 
