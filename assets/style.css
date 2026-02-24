@@ -1119,21 +1119,23 @@ h4.filter-label{
     
 }
 
-/* active filter button highlights the label green */
-button.filter-toggle[aria-pressed="true"] h4.filter-label {
-    color: var(--green1);
-    opacity:1;
 
-    text-shadow: 0 0 0.375rem var(--shadow3);
-}
 
 button.filter-toggle[aria-pressed="true"]{
     border-color: var(--shadow2);
     opacity: 1;
 }
+
 button.filter-toggle[aria-pressed="false"]{
     border-color: var(--panel-bdr);
     opacity: .5;
+}
+
+button.filter-toggle[aria-pressed="true"] h4.filter-label {
+    color: var(--green1);
+    opacity:1;
+
+    text-shadow: 0 0 0.375rem var(--shadow3);
 }
 
 
