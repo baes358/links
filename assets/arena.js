@@ -140,7 +140,7 @@ let renderUser = (userData) => {
 		`
 		<address>
 			<h3>${ userData.name }</h3>
-			<p><a href="https://are.na/${ userData.slug }">Are.na profile ↗</a></p>
+			<p><a href="https://are.na/${ userData.slug }">Are.na profile ↗&#xFE0E;</a></p>
 		</address>
 		`
 		
@@ -372,6 +372,8 @@ let showDetail = (block, index) => {
 	// scrollTop resets element's vertical scroll position to the top of container
 	document.querySelector('#detail-scroll').scrollTop = 0
 
+	// need to show drop button in block detail state
+	document.querySelector('#btn-drop').style.display = ''
 
 }
 
@@ -388,6 +390,10 @@ let resetDetail = () => {
 	document.querySelector('#state-detail').classList.remove('show')
 	document.querySelector('#state-info').classList.remove('gone')
 	document.querySelector('#detail-header-label').textContent = 'DETAILS'
+
+
+	// need to hide drop button in initial state
+	document.querySelector('#btn-drop').style.display = 'none'
 
 	selectedBlock = null
 
@@ -574,9 +580,19 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 	// adding event logic for clicking on equip button -> directs user to original link
 	let equipBtn = document.querySelector('#btn-equip')
 	equipBtn.addEventListener('click', () => {
-		if (!selectedBlock) return
-		window.open(getSourceUrl(selectedBlock.blockData), '_blank', 'noopener')
-		showToast('OPENING IN NEW TAB ↗')
+
+		if (!selectedBlock) {
+			// when in initial state and clicking equip
+			let channelUrl = document.querySelector('#channel-link').href
+			window.open(channelUrl, '_blank', 'noopener')
+			showToast('OPENING CHANNEL ↗&#xFE0E;')
+		}else {
+			// for when selecting a block and clicking equip 
+			window.open(getSourceUrl(selectedBlock.blockData), '_blank', 'noopener')
+			showToast('OPENING IN A NEW TAB ↗&#xFE0E;')
+		}
+
+		
 	})
 
 	// My understanding: The drop button similarly guards against null selection, applies a short opacity transition for visual feedback, hides the block after 300ms, resets the detail panel to its default state, and shows a confirmation toast notification. Both interactions rely on the shared selectedBlock state to make sure that the actions apply only to the actively selected block
@@ -593,7 +609,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 			resetDetail()
 		}, 300)
 
-		showToast('REMOVED FROM VIEW ✕')
+		showToast('REMOVED FROM VIEW ✕&#xFE0E;')
 	})
 
 })
