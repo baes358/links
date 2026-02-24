@@ -628,3 +628,27 @@ window.addEventListener('keydown', () => {
 	// event listener fires only once
 	{ once: true }
 )
+
+
+
+// adding mobile drawer for better mobile usability
+let drawer = document.querySelector('#panel-detail')
+let drawerHandle = drawer.querySelecter('.p-header')
+
+let openDrawer = () => {
+	drawer.classList.add('open')
+}
+
+let closeDrawer = () => {
+	drawer.classList.remove('open')
+	// bring back initial state of channel info
+	resetDetail()
+}
+
+drawerHandle.addEventListener('click', () => {
+	if (drawer.classList.contains('open')){
+		closeDrawer()
+	} else{
+		openDrawer()
+	}
+})
