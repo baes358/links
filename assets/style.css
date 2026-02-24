@@ -1314,12 +1314,15 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     object-fit:cover;
     display:block;
     filter:blur(.0625rem) contrast(130%) saturate(20%);
-    transition:filter .25s ease;
+    transition:filter .25s ease,
+                transform .3s ease;
+    transform-origin:center;
 }
 
 .content:hover img,
 .content.selected img{
     filter: contrast(110%) saturate(55%) brightness(.9);
+    transform:scale(1.08);
 }
 
 
@@ -1588,8 +1591,8 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 .sd-preview-img{
     width:100%;
     display:block;
-    filter:saturate(35%) brightness(.8) contrast(120%);
-    transition:filter .2s;
+    /* filter:saturate(35%) brightness(.8) contrast(120%); */
+    /* transition:filter .2s; */
 
 }
 .sd-preview-img:hover{
