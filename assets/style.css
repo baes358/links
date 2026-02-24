@@ -26,6 +26,7 @@
 
     --white: #edecef;
     --black: #000;
+    --graywhite:#bebcc2;
 
     --gray1: #0A0520;
     --gray2: #242630;
@@ -1371,7 +1372,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 }
 .si-sect-label{
     font-family:'Orbitron';
-    font-size:.38rem;
+    font-size:.55rem;
     letter-spacing:.2em;
     color:var(--gray4);
     text-transform:uppercase;
@@ -1465,7 +1466,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 }
 .si-stat-label{
     font-family:'Orbitron';
-    font-size:.36rem;
+    font-size:.5rem;
     letter-spacing:.1em;
     color:var(--gray5);
     margin:0;
@@ -1497,8 +1498,8 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 /* for block label type */
 .sd-category{
     font-family:'Orbitron';
-    font-size:.38rem;
-    letter-spacing:.2em;
+    font-size:.45rem;
+    letter-spacing:.1em;
     color:var(--gray4);
     text-transform:uppercase;
     border-block-end:var(--1px) solid var(--panel-bdr);
@@ -1509,9 +1510,9 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 .sd-name{
     font-family:'Orbitron';
     font-size:.95rem;
-    letter-spacing:.05em;
-    color:var(--white);
-    line-height:1.3;
+    letter-spacing:.07em;
+    color:var(--graywhite);
+    line-height:1.4;
 }
 /* for source url link from js */
 .sd-link{
@@ -1566,6 +1567,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     align-items:center;
     justify-content:center;
     min-height:5rem;
+    margin-block-end:.1rem;
 }
 .sd-preview-img{
     width:100%;
@@ -1606,7 +1608,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:.25rem .44rem;
+    padding:.4rem .44rem;
     border-block-end: var(--1px) solid var(--panel-bdr);
 }
 
@@ -1614,16 +1616,17 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     border-block-end:none;
 }
 
-.sd-stat-k{
+.sd-stat-cat{
     font-family:'Orbitron';
-    font-size:.36rem;
+    font-size:.45rem;
     letter-spacing:.1em;
     color:var(--gray4);
 }
-.sd-stat-v{
+.sd-stat-value{
     font-family:'Orbitron';
     font-size:.5rem;
-    color:var(--white);
+    letter-spacing:.1em;
+    color:var(--graywhite);
 }
 
 
