@@ -633,7 +633,7 @@ window.addEventListener('keydown', () => {
 
 // adding mobile drawer for better mobile usability
 let drawer = document.querySelector('#panel-detail')
-let drawerHandle = drawer.querySelecter('.p-header')
+let drawerHandle = drawer.querySelector('.p-header')
 
 let openDrawer = () => {
 	drawer.classList.add('open')
