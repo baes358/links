@@ -599,18 +599,19 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 
 	// adding event logic for clicking on drop button -> hides to show initial state of right panel
 	let dropBtn = document.querySelector('#btn-drop')
+	dropBtn.style.display = 'none'
+
 	dropBtn.addEventListener('click', () => {
 		if (!selectedBlock) return
 
-		selectedBlock.cell.style.transition = 'opacity .3s ease'
-		selectedBlock.cell.style.opacity = '0'
+		
 		setTimeout(() => {
 			selectedBlock.cell.hidden = true
 			resetDetail()
 			closeDrawer()
 		}, 300)
 
-		showToast('REMOVED FROM VIEW ✕&#xFE0E;')
+		showToast('DESELECTED ✕&#xFE0E;')
 	})
 
 })
