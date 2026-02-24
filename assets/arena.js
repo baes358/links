@@ -193,7 +193,7 @@ let renderBlock = (blockData) => {
 	// To start, a shared ul where we’ll insert all our blocks 
 	let channelBlocks = document.querySelector('#channel-blocks') 
 	let kind = getKind(blockData)
-	// store blocks by their id so modal can look it up later
+	// store blocks by their id so can look it up later
 	blocksById[blockData.id] = blockData 
 	// want to only show thumbnail media initially 
 	
@@ -220,7 +220,7 @@ let renderBlock = (blockData) => {
 	
 	
 	
-	// use data-block-id to open modal
+	// use data-block-id to access block
 	// data-kind is used for filtering toggles
 	thumbItem = 
 	`
