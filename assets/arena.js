@@ -255,16 +255,28 @@ let showDetail = (block, index) => {
 
 	let descHtml = ''
 
-	if (block.description && block.description.html){
+
+	if (block.type === 'Text' && block.content_html){
+		descHtml = block.content_html
+	} else if (block.description && block.description.html) {
 		descHtml = block.description.html
-	} else if (block.content && block.content.html) {
-		descHtml = block.content.html
 	} else if (block.content && typeof block.content === 'string'){
 		descHtml = 
 		`
 		<p>${block.content}</p>
 		`
 	}
+
+	// if (block.description && block.description.html){
+	// 	descHtml = block.description.html
+	// } else if (block.content && block.content.html) {
+	// 	descHtml = block.content.html
+	// } else if (block.content && typeof block.content === 'string'){
+	// 	descHtml = 
+	// 	`
+	// 	<p>${block.content}</p>
+	// 	`
+	// }
 
 
 	// right panel switches when user clicks on block

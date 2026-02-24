@@ -1426,6 +1426,8 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     padding: .45rem;
     background:var(--black);
     margin:0;
+    overflow-wrap:break-word;
+    word-break:break-word;
 }
 .sd-textbox.italic{
     font-style:italic;
