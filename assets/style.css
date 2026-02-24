@@ -106,7 +106,20 @@ html{
     background:var(--radial1);
 
     cursor:url('../media/crosshair.png'),auto;
+    font-size: 1.25em;
 }
+@media (780px <= width <= 1280px) {
+    html{
+        font-size:1.375em;
+    }
+}
+@media (width > 1280px) {
+    html{
+        font-size:1.5em;
+    }
+}
+
+
 body{
     height:100%;
     overflow: hidden;
@@ -1098,7 +1111,7 @@ section.filter-switch{
     border: var(--1px) solid var(--yellow);
     display:flex;
     flex-direction: row;
-    border-radius:0.438rem;
+    /* border-radius:0.438rem; */
     overflow:hidden;
 
 }
@@ -1129,7 +1142,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     background: var(--linear1);
     color: var(--black);
     opacity: 1;
-    border-radius:0 0.313rem 0.313rem 0;
+    /* border-radius:0 0.313rem 0.313rem 0; */
 }
 
 
@@ -1606,7 +1619,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 }
 #btn-equip:hover{
     box-shadow:0 0 0.75rem var(--light3);
-    background: var(--light2);
+    background: var(--light3);
 }
 
 
