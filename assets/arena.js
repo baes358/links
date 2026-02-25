@@ -241,6 +241,8 @@ let renderBlock = (blockData) => {
 
 // My understanding: showDetail() switches the right panel from its default state (which is initially showing the channel info) to a detailed view when a specific block is selected by the user. It determines the block’s type, the created date, descriptions, and media previews depending on whether the block contains an image, video, audio file, or embed. Then, the function inserts the structured content into the DOM, formats the index with padStart() for visual consistency, and resets the scroll position so each newly selected block starts at top of detail panel
 let showDetail = (block, index) => {
+
+
 	let kind = getKind(block)
 
 	let dateAdded = '-'
@@ -305,9 +307,7 @@ let showDetail = (block, index) => {
 
 	if (block.type === 'Attachment' && block.attachment){
 
-				console.log('Attachment block:', block.attachment)
-
-
+	
 
 		let contentType = block.attachment.content_type || ''
 		let fileUrl = block.attachment.url || ''

@@ -1615,6 +1615,8 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     width:100%;
     display:block;
     padding:.75rem;
+    min-height: 3rem;
+    box-sizing: border-box;
 }
 .sd-embed-wrap{
     width:100%;
