@@ -1124,7 +1124,7 @@ button.filter-toggle:hover{
 
 h4.filter-label{
     font-family:'Orbitron';
-    font-size:.5rem;
+    font-size:.75rem;
     font-weight:400;
     letter-spacing:.1em;
     color: var(--gray4);
