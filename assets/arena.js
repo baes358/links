@@ -255,28 +255,17 @@ let showDetail = (block, index) => {
 
 	let descHtml = ''
 
+	
 
-	if (block.type === 'Text' && block.content_html){
-		descHtml = block.content_html
+	if (block.type === 'Text'){
+		if (block.content && block.content.html){
+			descHtml = block.content.html
+		}
 	} else if (block.description && block.description.html) {
 		descHtml = block.description.html
-	} else if (block.content && typeof block.content === 'string'){
-		descHtml = 
-		`
-		<p>${block.content}</p>
-		`
 	}
-
-	// if (block.description && block.description.html){
-	// 	descHtml = block.description.html
-	// } else if (block.content && block.content.html) {
-	// 	descHtml = block.content.html
-	// } else if (block.content && typeof block.content === 'string'){
-	// 	descHtml = 
-	// 	`
-	// 	<p>${block.content}</p>
-	// 	`
-	// }
+	
+	
 
 
 	// right panel switches when user clicks on block
@@ -314,31 +303,26 @@ let showDetail = (block, index) => {
 	let previewHtml = ''
 	const imageUrl = getImageUrl(block)
 
-	if (imageUrl) {
-		previewHtml =
-		`
-		<img src="${imageUrl}" alt="${block.title || ''}" class="sd-preview-img">
-		`
-
-
-
-	} else if (block.type === 'Attachment' && block.attachment){
+	if (block.type === 'Attachment' && block.attachment){
 		let contentType = block.attachment.content_type || ''
+		let fileUrl = block.attachment.url || ''
 
 		if (contentType.includes('video')){
 			previewHtml = 
 			`
-			<video controls src="${block.attachment.url}" style="width:100%; display:block;"></video>
+			<video controls src="${block.attachment.url}" style="width:100%; display:block;">
+				<source src="${fileUrl}" type="${contentType}">
+			</video>
 			`
 		} else if (contentType.includes('audio')){
 			previewHtml = 
 			`
-			<audio controls src="${block.attachment.url}" style="width:100%;"></audio>
+			<audio controls src="${block.attachment.url}" style="width:100%;">
+				<source src="${fileUrl}" type="${contentType}">
+			</audio>
 			`
 		}
-
-	
-	} else if (block.type === 'Embed' && block.embed && block.embed.html){
+	}  else if (block.type === 'Embed' && block.embed && block.embed.html){
 		let isBehance = false
 
 		if (block.source && block.source.url && block.source.url.includes('behance.net')){
@@ -353,6 +337,12 @@ let showDetail = (block, index) => {
 			</section>
 			`
 		}
+	}else if (imageUrl) {
+		previewHtml =
+		`
+		<img src="${imageUrl}" alt="${block.title || ''}" class="sd-preview-img">
+		`
+
 	}
 
 

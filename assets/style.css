@@ -1586,13 +1586,13 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
 /* for previewing the media within panel */
 .sd-preview{
     width:100%;
-    overflow:hidden;
+    /* overflow:hidden; */
     border-block-end: var(--1px) solid var(--panel-bdr);
     background:var(--black);
     display:flex;
     align-items:center;
     justify-content:center;
-    min-height:5rem;
+    /* min-height:5rem; */
     margin-block-end:.1rem;
 }
 .sd-preview-img{
