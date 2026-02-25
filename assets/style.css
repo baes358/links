@@ -1553,6 +1553,7 @@ button.filter-toggle[aria-pressed="false"] .filter-switch .off{
     font-size:.42rem;
     letter-spacing:.06em;
     overflow:hidden;
+    margin-block-end:.2rem;
     transition:background .15s;
     cursor: url('../media/cursor.png'), pointer;
 }
