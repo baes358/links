@@ -304,20 +304,25 @@ let showDetail = (block, index) => {
 	const imageUrl = getImageUrl(block)
 
 	if (block.type === 'Attachment' && block.attachment){
+
+				console.log('Attachment block:', block.attachment)
+
+
+
 		let contentType = block.attachment.content_type || ''
 		let fileUrl = block.attachment.url || ''
 
 		if (contentType.includes('video')){
 			previewHtml = 
 			`
-			<video controls src="${block.attachment.url}" style="width:100%; display:block;">
+			<video controls style="width:100%; display:block;">
 				<source src="${fileUrl}" type="${contentType}">
 			</video>
 			`
 		} else if (contentType.includes('audio')){
 			previewHtml = 
 			`
-			<audio controls src="${block.attachment.url}" style="width:100%;">
+			<audio controls style="width:100%;">
 				<source src="${fileUrl}" type="${contentType}">
 			</audio>
 			`
