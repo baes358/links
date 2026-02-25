@@ -220,7 +220,7 @@ Animations include:
 * Floating tiles
 * Hero screen flash transition
 
-The starfield effect was adapted from a CodePen example and rewritten in pure CSS using layered radial gradients, due to not being able to fully comprehend and pply original code.
+The starfield effect was adapted from a CodePen example and rewritten in pure CSS using layered radial gradients, due to not being able to fully comprehend and pply original code. So, the original Sass-based implementation was translated into a pure CSS radial-gradient system for clarity and maintainability.
 
 **AI Attribution:**
 Claude suggested refining animation timing and structuring staggered `setTimeout()` transitions for the hero screen. (Please see an explanation of my own understanding and specific help from LLM in the arena.js file.)
@@ -231,7 +231,7 @@ Claude suggested refining animation timing and structuring staggered `setTimeout
 
 This project emphasizes these key points:
 
-* Semantic HTML structure
+* Semantic HTML structure: The project began with semantic HTML structure (header, nav, section, aside) before layering CSS and JavaScript behavior.
 * CSS variables for consistent system styling
 * Event delegation for dynamic elements
 * Defensive guard clauses
@@ -243,6 +243,4 @@ This project emphasizes these key points:
 
 ## Reflection
 
-This project pushed me to let the **concept itself drive the organizing principle for the interface**.
-
-Instead of building a neutral viewer for the collection as I initially started out with, I eventually designed a system that behaves like the interfaces being collected within the channel that I worked with.
+This project defnitely pushed me to treat the interface as the organizing principle rather than a neutral container for content. By translating the logic of a video game inventory system into a responsive web experience, I created a structure that feels inspectable and state-driven instead of static, which is far from what an actual video game interface is like to a user. Working with live data from the Are.na API was difficult as it required careful consideration of different media types, conditional rendering, and various interaction states. However, it was rewarding to see these come to fruition. I designed the visual system, filtering logic, counters, and animations to reinforce the inventory metaphor rather than act as decorations. Ultimately, the project became a cohesive system where the concept and functionality support one another.
